@@ -67,16 +67,30 @@ export default {
       if (url.origin !== 'https://script.google.com' || !url.pathname.endsWith('/exec')) throw new Error();
       url.searchParams.set('token', env.WEBHOOK_TOKEN);
       // Retain the deployed script's INSERT envelope; Supabase is no longer involved.
-      const response = await fetch(url, {
+      const response = await fetch(url.toString(), {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'INSERT', schema: 'public', table: 'join_requests', record }),
         signal: AbortSignal.timeout(25000),
       });
-      const result = await response.json();
+      const text = await response.text();
+      if (/Script function not found[^<]*doPost/i.test(text)) {
+        return reply(502, { error: 'Update your Apps Script web app deployment to the version containing doPost.', code: 'script_missing_doPost' });
+      }
+      if (/Unauthorized/.test(text)) {
+        return reply(502, { error: 'The Apps Script and Worker webhook tokens do not match.', code: 'script_unauthorized' });
+      }
+      if (/accounts\.google\.com\/ServiceLogin/.test(text)) {
+        return reply(502, { error: 'Set Apps Script web app access to Anyone.', code: 'script_login_required' });
+      }
+      if (!response.ok) return reply(502, { error: 'Google rejected the Apps Script request. Check its deployment and access settings.', code: `google_http_${response.status}` });
+      let result;
+      try { result = JSON.parse(text); } catch {
+        return reply(502, { error: 'Google did not return a valid script response. Check the Apps Script execution log.', code: 'script_invalid_response' });
+      }
       if (!response.ok || result.ok !== true) throw new Error();
       return reply(200, { ok: true, id: record.id });
-    } catch {
-      return reply(502, { error: 'Could not confirm your submission. Please retry or email info@joinoac.in' });
+    } catch (error) {
+      return reply(502, { error: 'Could not confirm your submission. Please retry or email info@joinoac.in', code: error?.name === 'TimeoutError' ? 'google_timeout' : 'google_connection_failed' });
     }
   },
 };

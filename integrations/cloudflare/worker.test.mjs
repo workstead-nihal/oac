@@ -22,6 +22,7 @@ function request(body = input, { origin = 'https://joinoac.in', method = 'POST',
 test('saves all four categories using the existing Apps Script contract', async (t) => {
   const forwarded = [];
   t.mock.method(globalThis, 'fetch', async (url, options) => {
+    assert.equal(typeof url, 'string');
     assert.equal(new URL(url).searchParams.get('token'), 'private-token');
     forwarded.push(JSON.parse(options.body));
     return Response.json({ ok: true });
@@ -102,4 +103,20 @@ test('rejects malformed JSON and oversized requests', async () => {
   const malformed = new Request('https://worker.example/submit', { method: 'POST', headers, body: '{' });
   assert.equal((await worker.fetch(malformed, env)).status, 400);
   assert.equal((await worker.fetch(request({ ...input, extra: 'a'.repeat(17000) }), env)).status, 413);
+});
+
+test('reports actionable Google deployment errors without leaking the token', async (t) => {
+  for (const [text, status, code] of [
+    ['Script function not found: doPost', 200, 'script_missing_doPost'],
+    ['Error: Unauthorized', 200, 'script_unauthorized'],
+    ['accounts.google.com/ServiceLogin', 200, 'script_login_required'],
+    ['Forbidden', 403, 'google_http_403'],
+    ['<html>Script error</html>', 200, 'script_invalid_response'],
+  ]) {
+    const mock = t.mock.method(globalThis, 'fetch', async () => new Response(text, { status }));
+    const response = await worker.fetch(request(), env);
+    assert.equal(response.status, 502);
+    assert.equal((await response.json()).code, code);
+    mock.mock.restore();
+  }
 });
