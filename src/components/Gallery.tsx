@@ -9,7 +9,7 @@ interface GalleryItem {
   large: string;
 }
 
-const images = import.meta.glob<string>('../../images/**/*.{jpg,jpeg,png,JPG}', {
+const images = import.meta.glob<string>('../../images/{art,cosplay,event}/*.{jpg,jpeg,png,JPG}', {
   eager: true,
   query: '?url',
   import: 'default',

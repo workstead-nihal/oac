@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import logo from '../../images/logo/Odisha Anime Community Trandsperent Logo.png';
 
 interface NavbarProps {
   onJoinClick: () => void;
@@ -48,9 +49,7 @@ export default function Navbar({ onJoinClick }: NavbarProps) {
           className="flex items-center gap-2 group"
           aria-label="OAC Home"
         >
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#D91515] to-[#F3B334] flex items-center justify-center font-display text-xl text-white shadow-lg group-hover:scale-110 transition-transform">
-            OAC
-          </div>
+          <img src={logo} alt="Odisha Anime Community logo" className="w-24 h-14 object-contain group-hover:scale-105 transition-transform" />
           <div className="hidden sm:block">
             <p className="font-display text-lg leading-none text-white tracking-wide">
               ODISHA ANIME

@@ -110,6 +110,10 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!selectedForm || submitting) return;
+    if (selectedForm === 'member' && !phone.trim()) {
+      setError('Please enter your phone number to become a member.');
+      return;
+    }
     if (!supabase) {
       setError('Submissions are currently unavailable. Please email us directly.');
       return;
@@ -122,7 +126,7 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
       name,
       email,
     };
-    if (phone) payload.phone = phone;
+    if (phone.trim()) payload.phone = phone.trim();
     if (city) payload.city = city;
     if (message) payload.message = message;
     if (selectedForm === 'collab' && portfolioUrl) payload.portfolio_url = portfolioUrl;
@@ -286,9 +290,10 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
                 </Field>
 
                 {/* Phone */}
-                <Field icon={Phone} label="Phone (optional)">
+                <Field icon={Phone} label={selectedForm === 'member' ? 'Phone' : 'Phone (optional)'} required={selectedForm === 'member'}>
                   <input
                     type="tel"
+                    required={selectedForm === 'member'}
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+91 90000 00000"

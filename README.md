@@ -12,6 +12,12 @@ React, TypeScript and Vite website for OAC.
 
 The site can load without Supabase configuration, but form submissions require it.
 
+## Google Sheets sync
+
+See [activation steps](integrations/google-sheets/README.md) to forward saved
+submissions into one spreadsheet with Members, Partners, Stalls, and Creators tabs.
+Member applications require a phone number.
+
 ## Checks and production build
 
 Run `npm run lint`, `npm run typecheck`, and `npm run build`.

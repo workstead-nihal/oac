@@ -1,4 +1,5 @@
 import { Instagram, Youtube, Mail, MapPin, Heart, ArrowUp } from 'lucide-react';
+import logo from '../../images/logo/Odisha Anime Community Trandsperent Logo.png';
 
 interface FooterProps {
   onJoinClick: () => void;
@@ -44,9 +45,7 @@ export default function Footer({ onJoinClick }: FooterProps) {
           {/* Brand */}
           <div className="sm:col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#D91515] to-[#F3B334] flex items-center justify-center font-display text-xl text-white">
-                OAC
-              </div>
+              <img src={logo} alt="Odisha Anime Community logo" className="w-24 h-14 object-contain" />
               <div>
                 <p className="font-display text-lg leading-none text-white tracking-wide">
                   ODISHA ANIME
