@@ -5,99 +5,42 @@ interface GalleryItem {
   image: string;
   title: string;
   category: string;
-  credit: string;
+  credit?: string;
   large: string;
 }
 
-const galleryItems: GalleryItem[] = [
-  {
-    image: 'https://images.pexels.com/photos/39594025/pexels-photo-39594025.jpeg?auto=compress&cs=tinysrgb&w=600',
-    large: 'https://images.pexels.com/photos/39594025/pexels-photo-39594025.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    title: 'Convention Cosplay',
-    category: 'Cosplay',
-    credit: 'Quyet Nguyen',
-  },
-  {
-    image: 'https://images.pexels.com/photos/34479190/pexels-photo-34479190.jpeg?auto=compress&cs=tinysrgb&w=600',
-    large: 'https://images.pexels.com/photos/34479190/pexels-photo-34479190.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    title: 'Purple Warrior',
-    category: 'Cosplay',
-    credit: 'Ken Taro',
-  },
-  {
-    image: 'https://images.pexels.com/photos/33651541/pexels-photo-33651541.jpeg?auto=compress&cs=tinysrgb&w=600',
-    large: 'https://images.pexels.com/photos/33651541/pexels-photo-33651541.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    title: 'Blue Armor Build',
-    category: 'Cosplay',
-    credit: 'Steven Susilo',
-  },
-  {
-    image: 'https://images.pexels.com/photos/6002182/pexels-photo-6002182.jpeg?auto=compress&cs=tinysrgb&w=600',
-    large: 'https://images.pexels.com/photos/6002182/pexels-photo-6002182.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    title: 'Sketchbook Eyes',
-    category: 'Art',
-    credit: 'Sutej Arts',
-  },
-  {
-    image: 'https://images.pexels.com/photos/39797616/pexels-photo-39797616.jpeg?auto=compress&cs=tinysrgb&w=600',
-    large: 'https://images.pexels.com/photos/39797616/pexels-photo-39797616.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    title: 'Azure Elf',
-    category: 'Cosplay',
-    credit: 'Quyet Nguyen',
-  },
-  {
-    image: 'https://images.pexels.com/photos/4006615/pexels-photo-4006615.jpeg?auto=compress&cs=tinysrgb&w=600',
-    large: 'https://images.pexels.com/photos/4006615/pexels-photo-4006615.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    title: 'Portrait Colors',
-    category: 'Art',
-    credit: 'Verend',
-  },
-  {
-    image: 'https://images.pexels.com/photos/30486833/pexels-photo-30486833.jpeg?auto=compress&cs=tinysrgb&w=600',
-    large: 'https://images.pexels.com/photos/30486833/pexels-photo-30486833.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    title: 'Pink Hair Poser',
-    category: 'Cosplay',
-    credit: 'Mo On',
-  },
-  {
-    image: 'https://images.pexels.com/photos/11584919/pexels-photo-11584919.jpeg?auto=compress&cs=tinysrgb&w=600',
-    large: 'https://images.pexels.com/photos/11584919/pexels-photo-11584919.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    title: 'Framed Illustration',
-    category: 'Art',
-    credit: 'Kristina Snowasp',
-  },
-  {
-    image: 'https://images.pexels.com/photos/13190380/pexels-photo-13190380.jpeg?auto=compress&cs=tinysrgb&w=600',
-    large: 'https://images.pexels.com/photos/13190380/pexels-photo-13190380.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    title: 'Fantasy Smoke',
-    category: 'Cosplay',
-    credit: 'Rodrigo Zarate',
-  },
-  {
-    image: 'https://images.pexels.com/photos/1340905/pexels-photo-1340905.jpeg?auto=compress&cs=tinysrgb&w=600',
-    large: 'https://images.pexels.com/photos/1340905/pexels-photo-1340905.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    title: 'Sword Bearer',
-    category: 'Cosplay',
-    credit: 'meijii',
-  },
-  {
-    image: 'https://images.pexels.com/photos/2716895/pexels-photo-2716895.jpeg?auto=compress&cs=tinysrgb&w=600',
-    large: 'https://images.pexels.com/photos/2716895/pexels-photo-2716895.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    title: 'Street Art Portrait',
-    category: 'Art',
-    credit: 'Two Dreamers',
-  },
-  {
-    image: 'https://images.pexels.com/photos/37905259/pexels-photo-37905259.jpeg?auto=compress&cs=tinysrgb&w=600',
-    large: 'https://images.pexels.com/photos/37905259/pexels-photo-37905259.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    title: 'Warrior Spirit',
-    category: 'Cosplay',
-    credit: 'Malcoln Oliveira',
-  },
-];
+const images = import.meta.glob<string>('../../images/**/*.{jpg,jpeg,png,JPG}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
 
-type FilterType = 'All' | 'Cosplay' | 'Art';
+const imageDetails: Record<string, { title: string; credit?: string }> = {
+  '(gojo)agentt_i.png': { title: 'Gojo Fan Art', credit: 'agentt_i' },
+  '(phainon) agentt_i.jpg': { title: 'Phainon Fan Art', credit: 'agentt_i' },
+  'aashprit _page-0001.jpg': { title: 'Community Artwork', credit: 'aashprit' },
+  'aashprit _page-0004.jpg': { title: 'Community Artwork', credit: 'aashprit' },
+  'mha @_yendigo.jpg': { title: 'My Hero Academia Fan Art', credit: '_yendigo' },
+  'ethane_radd.jpg': { title: 'Community Cosplay', credit: 'ethane_radd' },
+  'ethane_radd (1).jpg': { title: 'Community Cosplay', credit: 'ethane_radd' },
+  'stfumanishaa-5(2007024118388072).jpg': { title: 'Community Cosplay', credit: 'stfumanishaa' },
+  'COSPLAYERS .jpg': { title: 'OAC Cosplayers' },
+};
 
+const galleryItems: GalleryItem[] = Object.entries(images).map(([path, image]) => {
+  const filename = path.split('/').pop()!;
+  const category = path.includes('/art/') ? 'Art' : path.includes('/cosplay/') ? 'Cosplay' : 'Events';
+  const details = imageDetails[filename];
+  return {
+    image,
+    large: image,
+    category,
+    title: details?.title ?? (category === 'Events' ? 'OAC Community Event' : 'Community Cosplay'),
+    credit: details?.credit,
+  };
+});
+
+type FilterType = 'All' | 'Cosplay' | 'Art' | 'Events';
 export default function Gallery() {
   const [filter, setFilter] = useState<FilterType>('All');
   const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
@@ -121,17 +64,17 @@ export default function Gallery() {
             Member Creativity
           </p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-white leading-tight">
-            Art & Cosplay <span className="text-gradient-gold">Gallery</span>
+            Community <span className="text-gradient-gold">Gallery</span>
           </h2>
           <p className="mt-6 text-base sm:text-lg text-gray-400 max-w-2xl mx-auto">
             A showcase of the incredible talent within our community — from hand-crafted
-            cosplay builds to breathtaking artwork. This is where passion becomes art.
+            cosplay builds to breathtaking artwork and event memories. This is where passion becomes art.
           </p>
         </div>
 
         {/* Filter buttons */}
-        <div className="flex justify-center gap-3 mb-10">
-          {(['All', 'Cosplay', 'Art'] as FilterType[]).map((type) => (
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
+          {(['All', 'Cosplay', 'Art', 'Events'] as FilterType[]).map((type) => (
             <button
               key={type}
               onClick={() => setFilter(type)}
@@ -150,7 +93,7 @@ export default function Gallery() {
         <div className="columns-2 md:columns-3 lg:columns-4 gap-4 sm:gap-5">
           {filtered.map((item) => (
             <button
-              key={item.title + item.credit}
+              key={item.image}
               onClick={() => setLightbox(item)}
               className="group relative w-full mb-4 sm:mb-5 break-inside-avoid rounded-2xl overflow-hidden bg-white/5 border border-white/5 hover:border-[#F3B334]/40 transition-all duration-300 block"
             >
@@ -166,7 +109,7 @@ export default function Gallery() {
                   <div>
                     <p className="text-white font-semibold text-sm">{item.title}</p>
                     <p className="text-[#F3B334] text-xs mt-0.5">
-                      {item.category} · by {item.credit}
+                      {item.category}{item.credit && <> · by {item.credit}</>}
                     </p>
                   </div>
                   <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
@@ -213,12 +156,12 @@ export default function Gallery() {
             <img
               src={lightbox.large}
               alt={lightbox.title}
-              className="w-full rounded-2xl"
+              className="w-full max-h-[80vh] object-contain rounded-2xl"
             />
             <div className="mt-4 text-center">
               <p className="text-white font-semibold text-lg">{lightbox.title}</p>
               <p className="text-[#F3B334] text-sm mt-1">
-                {lightbox.category} · by {lightbox.credit}
+                {lightbox.category}{lightbox.credit && <> · by {lightbox.credit}</>}
               </p>
             </div>
           </div>

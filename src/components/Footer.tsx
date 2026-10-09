@@ -126,13 +126,11 @@ export default function Footer({ onJoinClick }: FooterProps) {
             </h3>
             <div className="space-y-3">
               <a
-                href="https://joinoac.in"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="mailto:info@joinoac.in"
                 className="flex items-center gap-2 text-sm text-gray-500 hover:text-[#F3B334] transition-colors"
               >
                 <Mail size={16} />
-                joinoac.in
+                info@joinoac.in
               </a>
               <div className="flex items-center gap-2 text-sm text-gray-500">
                 <MapPin size={16} className="text-[#D91515]" />
@@ -156,8 +154,7 @@ export default function Footer({ onJoinClick }: FooterProps) {
                   <Youtube size={18} />
                 </a>
                 <a
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
+                  href="mailto:info@joinoac.in"
                   className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#D91515] flex items-center justify-center text-gray-400 hover:text-white transition-colors"
                   aria-label="Email"
                 >
