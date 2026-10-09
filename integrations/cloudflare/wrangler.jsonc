@@ -1,0 +1,15 @@
+{
+  "name": "oac-forms",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-09",
+  "workers_dev": true,
+  "vars": {
+    "ALLOWED_ORIGINS": "https://joinoac.in,https://www.joinoac.in",
+    "GOOGLE_SHEETS_WEBHOOK_URL": "https://script.google.com/macros/s/AKfycbwrpYJ1-YPNkIyxyA1ahrp9-ImJIuofU6AOYdJk03pmJaH8IsTy7_zpAKMRMAKD-Hns/exec"
+  },
+  "ratelimits": [{
+    "name": "SUBMISSION_LIMITER",
+    "namespace_id": "1001",
+    "simple": { "limit": 5, "period": 60 }
+  }]
+}

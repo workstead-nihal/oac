@@ -6,15 +6,15 @@ React, TypeScript and Vite website for OAC.
 
 1. Install Node.js 22 or later.
 2. Run `npm ci`.
-3. Copy `.env.example` to `.env` and fill in your Supabase project URL and public anon key. Never use a service-role key in this frontend.
-4. Apply `supabase/migrations/20261009115416_create_join_requests_table.sql` to your Supabase database.
+3. Copy `.env.example` to `.env` and fill in `VITE_FORMS_ENDPOINT` with your Cloudflare Worker `/submit` URL.
+4. Follow [form setup](integrations/google-sheets/README.md) to configure the Worker and Google Sheet.
 5. Run `npm run dev`.
 
-The site can load without Supabase configuration, but form submissions require it.
+The site can load without a forms endpoint, but submissions require a configured Worker.
 
 ## Google Sheets sync
 
-See [activation steps](integrations/google-sheets/README.md) to forward saved
+See [activation steps](integrations/google-sheets/README.md) to save
 submissions into one spreadsheet with Members, Partners, Stalls, and Creators tabs.
 Member applications require a phone number.
 

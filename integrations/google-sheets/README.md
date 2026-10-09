@@ -1,24 +1,35 @@
-# Google Sheets submission sync
+﻿# OAC forms → Google Sheets
 
-The website saves submissions to Supabase. An INSERT database webhook forwards
-each saved submission to one Google spreadsheet with Members, Partners, Stalls,
-and Creators tabs. The database remains the source of truth if Google is unavailable.
+The website sends forms to a Cloudflare Worker, which validates them and forwards them to Apps Script. One spreadsheet stores submissions in Members, Partners, Stalls, and Creators tabs. No Supabase account or database webhook is needed.
 
-## Activate
+## Existing Google setup
 
-1. Create/import the OAC submissions spreadsheet in the Google account that should own it. Keep its sharing restricted.
-2. Open **Extensions → Apps Script**, and paste `Code.gs` into the script editor.
-3. In **Project Settings → Script Properties**, set `SPREADSHEET_ID` to the ID from the spreadsheet URL (between `/d/` and `/edit`).
-4. Run `setup` once and authorize spreadsheet access. This prepares the four tabs and creates `WEBHOOK_TOKEN` in Script Properties.
-5. Choose **Deploy → New deployment → Web app**, execute as **Me**, access **Anyone**. Copy the deployed `/exec` URL. The token protects writes; the script has no public read endpoint. Never put the token in the website, GitHub variables, or source code.
-6. In Supabase **Database Webhooks**, create an HTTP webhook for `public.join_requests`, event **INSERT**, method **POST**. Use `<exec URL>?token=<WEBHOOK_TOKEN>` as its URL, JSON content type, and a 10,000 ms timeout. Store this URL only in the backend webhook configuration.
-7. Apply `supabase/migrations/20261009190000_require_member_phone.sql` using Supabase SQL Editor. It requires member phone numbers on new/updated records and preserves historical submissions.
-8. Submit one disposable test for each form category. Verify each reaches the correct tab, then remove the test rows from Supabase and Sheets. Verify that members cannot submit a blank phone number.
+Your existing Apps Script deployment is compatible with the Worker. Keep these Script Properties:
 
-New submissions sync after activation. Existing submissions are not backfilled.
-Duplicate deliveries are detected using Submission ID. If delivery fails, the
-submission remains in Supabase; inspect webhook logs and replay its INSERT payload.
-Do not assume database webhooks automatically retry failed deliveries.
+- `SPREADSHEET_ID`: `1izPI4aZzXaUOUHXjdduqmi5jvPvlKOkwrKqto8Z7FfQ`
+- `WEBHOOK_TOKEN`: the private token created by `setup`
 
-Reference: [Supabase database webhooks](https://supabase.com/docs/guides/database/webhooks),
-[Google Apps Script web apps](https://developers.google.com/apps-script/guides/web).
+The script must be deployed as a Web app, executing as **Me**, with access **Anyone**. Keep the spreadsheet sharing restricted. `Code.gs` includes no public read endpoint. If you edit the script, update its deployment to a new version.
+
+## Activate the Cloudflare Worker
+
+1. Create a free account at https://dash.cloudflare.com/sign-up. No DNS or domain transfer is required.
+2. From the project directory, run `npm run worker:login` and finish the Cloudflare authorization in your browser.
+3. Run `npm run worker:deploy`. This publishes the Worker configured in `integrations/cloudflare/wrangler.jsonc`. Copy its `https://oac-forms.<your-account>.workers.dev` URL.
+4. Run `npm run worker:token`. Paste `WEBHOOK_TOKEN` from Apps Script's Script Properties when prompted. Wrangler stores it as a Worker secret. Never add this token to the frontend or a `VITE_` variable.
+5. In local `.env`, set `VITE_FORMS_ENDPOINT=https://oac-forms.<your-account>.workers.dev/submit`. For local testing, temporarily add `http://127.0.0.1:5173` to `ALLOWED_ORIGINS` in the Worker config and redeploy. Restart Vite after changing `.env`.
+6. Submit a disposable test for each form, then verify the correct tab in Google Sheets. Confirm a blank member phone is rejected, failed submissions preserve the fields, and retries do not create duplicate rows. Remove the disposable rows after testing.
+7. In GitHub **Settings → Secrets and variables → Actions → Variables**, set `VITE_FORMS_ENDPOINT` to the verified Worker `/submit` URL. Merge the migration branch to `main` to deploy the frontend. The Worker has its own deployment command; frontend pushes do not redeploy it.
+
+The form only shows success after Google confirms a saved row. If Google fails or times out, users can retry with the same submission ID; the script deduplicates that ID. Editing the form before retrying creates a new submission ID.
+
+The Worker limits each IP to five requests per minute and allows the production site origins. This is basic abuse protection, not authentication. If persistent automated spam becomes a problem, add Cloudflare Turnstile.
+
+Google Sheets is now the only submission store. Existing Supabase records are not migrated or deleted; retain/export them separately. The `supabase/migrations` directory is historical and is not used by this integration.
+
+## Checks
+
+Run `npm run test:forms`, `npm run lint`, `npm run typecheck`, and `npm run build`.
+Run `npm run worker:deploy -- --dry-run` to validate the Worker package without publishing.
+
+References: [Worker secrets](https://developers.cloudflare.com/workers/configuration/secrets/), [rate limiting](https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/), [Apps Script web apps](https://developers.google.com/apps-script/guides/web).

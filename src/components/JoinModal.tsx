@@ -1,4 +1,4 @@
-import { useState, useEffect, type FormEvent } from 'react';
+import { useState, useEffect, useRef, type FormEvent } from 'react';
 import {
   X,
   User,
@@ -16,7 +16,7 @@ import {
   ShoppingCart,
   PenTool,
 } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { submitJoinRequest } from '@/lib/submissions';
 
 interface JoinModalProps {
   isOpen: boolean;
@@ -45,6 +45,7 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const submission = useRef<{ signature: string; id: string } | null>(null);
 
   // Form fields
   const [name, setName] = useState('');
@@ -84,6 +85,7 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
   }, [isOpen, selectedForm, onClose]);
 
   const resetForm = () => {
+    submission.current = null;
     setName('');
     setEmail('');
     setPhone('');
@@ -114,10 +116,6 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
       setError('Please enter your phone number to become a member.');
       return;
     }
-    if (!supabase) {
-      setError('Submissions are currently unavailable. Please email us directly.');
-      return;
-    }
     setSubmitting(true);
     setError(null);
 
@@ -137,14 +135,15 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
     }
 
     try {
-      const { error: insertError } = await supabase
-        .from('join_requests')
-        .insert(payload);
-      if (insertError) throw insertError;
+      const signature = JSON.stringify(payload);
+      if (submission.current?.signature !== signature) {
+        submission.current = { signature, id: crypto.randomUUID() };
+      }
+      await submitJoinRequest({ ...payload, id: submission.current.id });
       setSuccess(true);
       resetForm();
-    } catch {
-      setError('Something went wrong. Please try again or email us directly.');
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : 'Something went wrong. Please try again or email info@joinoac.in.');
     } finally {
       setSubmitting(false);
     }
