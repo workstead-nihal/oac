@@ -51,7 +51,7 @@ export default function Hero({ onJoinClick }: HeroProps) {
         <p className="mt-6 text-lg sm:text-xl md:text-2xl text-gray-300 font-light max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '0.15s' }}>
           You didn't just find a community.
           <br className="hidden sm:block" />
-          You found your <span className="text-[#F3B334] font-medium">anime family</span>.
+          You found your <span className="text-[#F3B334] font-medium">family</span>.
         </p>
 
         {/* Sub description */}
