@@ -135,7 +135,7 @@ export default function Footer({ onJoinClick }: FooterProps) {
                 <MapPin size={16} className="text-[#D91515]" />
                 Bhubaneswar, Odisha
               </div>
-              <div className="flex items-center gap-3 pt-2">
+              <div className="flex flex-wrap items-center gap-3 pt-2">
                 <a
                   href="https://www.instagram.com/odisha.anime.community/"
                   target="_blank"
@@ -161,23 +161,29 @@ export default function Footer({ onJoinClick }: FooterProps) {
                 >
                   <Mail size={18} />
                 </a>
-              </div>
-              <div className="flex flex-wrap gap-3">
                 <a
                   href="https://discord.gg/VnUDQh4yJv"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3 py-2 rounded-full bg-white/5 text-sm text-gray-400 hover:bg-[#D91515] hover:text-white transition-colors"
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#5865F2] flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+                  aria-label="Join OAC on Discord"
+                  title="Discord"
                 >
-                  Discord
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M20.3 4.4a19.8 19.8 0 0 0-4.9-1.5l-.6 1.2a18.3 18.3 0 0 0-5.6 0l-.6-1.2a19.8 19.8 0 0 0-4.9 1.5C.6 9 .0 13.4.3 17.7a19.8 19.8 0 0 0 6 3l1.2-2a12.7 12.7 0 0 1-1.9-.9l.5-.4c3.8 1.8 8 1.8 11.8 0l.5.4a12.7 12.7 0 0 1-1.9.9l1.2 2a19.8 19.8 0 0 0 6-3c.4-5-1-9.4-3.4-13.3ZM8.2 15.1c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4Zm7.6 0c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4Z" />
+                  </svg>
                 </a>
                 <a
                   href="https://chat.whatsapp.com/DtaCCgJyOGqIZu3P3n3J7r"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3 py-2 rounded-full bg-white/5 text-sm text-gray-400 hover:bg-[#D91515] hover:text-white transition-colors"
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#25D366] flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+                  aria-label="Join OAC on WhatsApp"
+                  title="WhatsApp"
                 >
-                  WhatsApp
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.5 0 .2 5.3.2 11.9c0 2.1.6 4.2 1.6 6L0 24l6.3-1.7a11.9 11.9 0 0 0 5.8 1.5c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.5-8.4ZM12.1 21.8a9.9 9.9 0 0 1-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4a9.9 9.9 0 1 1 8.3 4.6Zm5.4-7.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6.3-.5c.1-.2 0-.4 0-.6l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6s1.1 2.9 1.3 3.1c.1.2 2.2 3.4 5.3 4.8.8.3 1.3.5 1.8.6.7.2 1.3.2 1.8.1.6-.1 1.8-.7 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.2-.6-.4Z" />
+                  </svg>
                 </a>
               </div>
             </div>
