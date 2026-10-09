@@ -31,7 +31,7 @@ export default function Hero({ onJoinClick }: HeroProps) {
       <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-[#F3B334]/10 rounded-full blur-[120px] animate-pulse-slow" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center pt-20 pb-10">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center pt-20 pb-10 md:pb-32">
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#F3B334]/30 bg-[#F3B334]/5 backdrop-blur-sm mb-8 animate-fade-in">
           <Sparkles size={16} className="text-[#F3B334]" />

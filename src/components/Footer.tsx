@@ -137,16 +137,18 @@ export default function Footer({ onJoinClick }: FooterProps) {
               </div>
               <div className="flex items-center gap-3 pt-2">
                 <a
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
+                  href="https://www.instagram.com/odisha.anime.community/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#D91515] flex items-center justify-center text-gray-400 hover:text-white transition-colors"
                   aria-label="Instagram"
                 >
                   <Instagram size={18} />
                 </a>
                 <a
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
+                  href="https://www.youtube.com/@OdishaAnimeClub"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#D91515] flex items-center justify-center text-gray-400 hover:text-white transition-colors"
                   aria-label="YouTube"
                 >
@@ -158,6 +160,24 @@ export default function Footer({ onJoinClick }: FooterProps) {
                   aria-label="Email"
                 >
                   <Mail size={18} />
+                </a>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href="https://discord.gg/VnUDQh4yJv"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-2 rounded-full bg-white/5 text-sm text-gray-400 hover:bg-[#D91515] hover:text-white transition-colors"
+                >
+                  Discord
+                </a>
+                <a
+                  href="https://chat.whatsapp.com/DtaCCgJyOGqIZu3P3n3J7r"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-2 rounded-full bg-white/5 text-sm text-gray-400 hover:bg-[#D91515] hover:text-white transition-colors"
+                >
+                  WhatsApp
                 </a>
               </div>
             </div>
