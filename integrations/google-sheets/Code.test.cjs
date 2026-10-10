@@ -13,9 +13,17 @@ function fixture() {
       getLastRow: () => rows.length,
       getLastColumn: () => Math.max(0, ...rows.map((row) => row.length)),
       appendRow: (row) => rows.push([...row]),
+      moveColumns: (range, destination) => {
+        rows.forEach((row) => {
+          while (row.length < rows[0].length) row.push('');
+          const [value] = row.splice(range.column - 1, 1);
+          row.splice(destination - 1, 0, value);
+        });
+      },
       setFrozenRows() {}, setColumnWidths() {}, setColumnWidth() {},
       getRange: (row, col, height = 1, width = 1) => {
         const range = {
+          column: col,
           setBackground: () => range, setFontColor: () => range,
           setFontWeight: () => range, setNumberFormat: () => range,
           getValues: () => Array.from({ length: height }, (_, i) => Array.from({ length: width }, (_, j) => rows[row - 1 + i]?.[col - 1 + j] ?? '')),
@@ -112,20 +120,19 @@ test('supports previous member headings while preserving extra columns and old r
   const previous = ['Old timestamp', 'old@example.com', 'Old Member', '0123456789', '@old', 'College', '18–25', 'Art', 'Friend', 'Yes'];
   f.tabs.Members.rows.splice(0, f.tabs.Members.rows.length, [...headings], [...previous]);
   f.context.setup();
-  assert.deepEqual(f.tabs.Members.rows[1], previous);
-  assert.deepEqual(f.tabs.Members.rows[0].slice(0, 10), headings);
-  assert.deepEqual(f.tabs.Members.rows[0].slice(10), ['Submission ID', 'Message']);
+  assert.deepEqual(f.tabs.Members.rows[1].slice(2, 11), previous.slice(1));
+  assert.deepEqual(f.tabs.Members.rows[0], ['Submission ID', 'Timestamp', ...headings.slice(1), 'Message']);
   for (const volunteering of ['Yes', 'No', 'Maybe']) {
     const entry = { ...record, id: `test-${volunteering}`, form_type: 'member', city: 'Bhubaneswar', social_media_id: '@new', age_range: '18–24', referral: 'Instagram', message: `Interested in volunteering: ${volunteering}\n\nHello` };
     f.post(entry);
     const row = f.tabs.Members.rows.at(-1);
-    assert.equal(row[1], record.email);
-    assert.equal(row[2], record.name);
-    assert.equal(row[3], "'+919000000000");
-    assert.deepEqual(row.slice(4, 9), ["'@new", 'Bhubaneswar', '18–24', '', 'Instagram']);
-    assert.equal(row[9], volunteering);
-    assert.equal(row[10], entry.id);
-    assert.equal(row[11], entry.message);
+    assert.equal(row[2], record.email);
+    assert.equal(row[3], record.name);
+    assert.equal(row[4], "'+919000000000");
+    assert.deepEqual(row.slice(5, 10), ["'@new", 'Bhubaneswar', '18–24', '', 'Instagram']);
+    assert.equal(row[10], volunteering);
+    assert.equal(row[0], entry.id);
+    assert.equal(row[11], 'Hello');
     assert.equal(f.post(entry).duplicate, true);
   }
   assert.equal(f.tabs.Members.rows.length, 5);
@@ -139,13 +146,13 @@ test('setup restores a missing timestamp without moving imported member data', (
   const previous = ['old@example.com', 'Old Member', '0123456789', 'College', '18–24'];
   f.tabs.Members.rows.splice(0, f.tabs.Members.rows.length, [...headings], [...previous]);
   f.context.setup();
-  assert.deepEqual(f.tabs.Members.rows[1], previous);
-  assert.deepEqual(f.tabs.Members.rows[0].slice(0, 5), headings);
+  assert.deepEqual(f.tabs.Members.rows[1].slice(2, 7), previous);
+  assert.deepEqual(f.tabs.Members.rows[0].slice(0, 7), ['Submission ID', 'Submitted At', ...headings]);
   f.post({ ...record, form_type: 'member', city: 'New College', age_range: '25–34' });
   const headers = f.tabs.Members.rows[0];
   const row = f.tabs.Members.rows[2];
-  assert.equal(row[3], 'New College');
-  assert.equal(row[4], '25–34');
+  assert.equal(row[5], 'New College');
+  assert.equal(row[6], '25–34');
   assert.equal(row[headers.indexOf('Submitted At')].getTime(), Date.parse(record.created_at));
   assert.equal(f.post({ ...record, form_type: 'member' }).duplicate, true);
 });

@@ -54,6 +54,10 @@ function setup() {
           mapped.push(entry[0]);
         }
       });
+      ['id', 'created_at'].forEach(function (field, index) {
+        const column = memberFields(sheet).indexOf(field) + 1;
+        if (column !== index + 1) sheet.moveColumns(sheet.getRange(1, column), index + 1);
+      });
     }
   });
   if (!properties.getProperty('WEBHOOK_TOKEN')) {
@@ -104,7 +108,10 @@ function doPost(e) {
           if (isNaN(date.getTime())) throw new Error('Invalid submission date');
           return date;
         }
-        const value = String(record[field] == null ? '' : record[field]);
+        let value = String(record[field] == null ? '' : record[field]);
+        if (record.form_type === 'member' && field === 'message') {
+          value = value.replace(/^Interested in volunteering: (Yes|No|Maybe)(?:\r?\n\r?\n|\r?\n|$)/, '');
+        }
         // Treat user input as text, including phone prefixes and formula characters.
         return /^[\s]*[=+\-@]/.test(value) ? "'" + value : value;
       });

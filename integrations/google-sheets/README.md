@@ -37,7 +37,9 @@ Google Sheets is now the only submission store. Existing Supabase records are no
 
 New submissions match columns by heading in `Members`. Social media ID maps to `3. Instagram handle`, City / College or School maps to `4. College/School & Place`, age maps to `5. Age range`, and referral maps to `7. How did you find us?`. City / College or School and age range are required for new members; social media and referral are optional. Interests remain blank for new submissions because the website does not collect them.
 
-If the imported table has no Timestamp column, setup adds `Submitted At` to the right without moving old values. Missing social media, age, and referral columns are also added automatically. Historical rows can keep blank submission IDs and timestamps. `Members Backup` is retained separately and is not automatically merged. Partners, Stalls, and Creators retain their existing column order. Redeploy Apps Script before testing the new member fields so their values reach the matching columns.
+If the imported table has no Timestamp column, setup adds `Submitted At`. Setup then moves the entire Submission ID and timestamp columns to positions A and B, preserving their existing values and the relative order of the other columns. Missing social media, age, and referral columns are also added automatically. Historical rows can keep blank submission IDs and timestamps. `Members Backup` is retained separately and is not automatically merged. Partners, Stalls, and Creators retain their existing column order. Redeploy Apps Script before testing the new member fields so their values reach the matching columns.
+
+New member rows store the volunteering answer in its own column; Message contains only the user's optional message. Previously saved messages are unchanged.
 
 ## Checks
 
