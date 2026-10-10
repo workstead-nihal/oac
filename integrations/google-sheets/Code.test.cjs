@@ -11,13 +11,21 @@ function fixture() {
     return {
       rows,
       getLastRow: () => rows.length,
-      appendRow: (row) => rows.push(row),
+      getLastColumn: () => Math.max(0, ...rows.map((row) => row.length)),
+      appendRow: (row) => rows.push([...row]),
       setFrozenRows() {}, setColumnWidths() {}, setColumnWidth() {},
-      getRange: (row, col) => {
+      getRange: (row, col, height = 1, width = 1) => {
         const range = {
           setBackground: () => range, setFontColor: () => range,
           setFontWeight: () => range, setNumberFormat: () => range,
-          setValues: (values) => { rows[row - 1] = values[0]; return range; },
+          getValues: () => Array.from({ length: height }, (_, i) => Array.from({ length: width }, (_, j) => rows[row - 1 + i]?.[col - 1 + j] ?? '')),
+          setValues: (values) => {
+            values.forEach((valuesRow, i) => {
+              rows[row - 1 + i] ||= [];
+              valuesRow.forEach((value, j) => { rows[row - 1 + i][col - 1 + j] = value; });
+            });
+            return range;
+          },
           createTextFinder: (id) => {
             const finder = {
               matchEntireCell: () => finder, useRegularExpression: () => finder,
@@ -96,4 +104,32 @@ test('releases lock when writing fails', () => {
   assert.throws(() => f.post({ ...record, form_type: 'member', created_at: 'bad-date' }), /Invalid submission date/);
   assert.equal(f.releases(), 1);
   assert.equal(f.tabs.Members.rows.length, 1);
+});
+
+test('supports previous member headings while preserving extra columns and old rows', () => {
+  const f = fixture();
+  const headings = ['Timestamp', 'Email Address', '1. Full Name ', '2. Mobile Number', '3. Instagram handle  ', '4. College/School & Place', '5. Age range  ', '6. Interests  ', '7. How did you find us? ', '8. Want to volunteer?  '];
+  const previous = ['Old timestamp', 'old@example.com', 'Old Member', '0123456789', '@old', 'College', '18–25', 'Art', 'Friend', 'Yes'];
+  f.tabs.Members.rows.splice(0, f.tabs.Members.rows.length, [...headings], [...previous]);
+  f.context.setup();
+  assert.deepEqual(f.tabs.Members.rows[1], previous);
+  assert.deepEqual(f.tabs.Members.rows[0].slice(0, 10), headings);
+  assert.deepEqual(f.tabs.Members.rows[0].slice(10), ['Submission ID', 'Message', 'City']);
+  for (const volunteering of ['Yes', 'No', 'Maybe']) {
+    const entry = { ...record, id: `test-${volunteering}`, form_type: 'member', city: 'Bhubaneswar', message: `Interested in volunteering: ${volunteering}\n\nHello` };
+    f.post(entry);
+    const row = f.tabs.Members.rows.at(-1);
+    assert.equal(row[1], record.email);
+    assert.equal(row[2], record.name);
+    assert.equal(row[3], "'+919000000000");
+    assert.deepEqual(row.slice(4, 9), ['', '', '', '', '']);
+    assert.equal(row[9], volunteering);
+    assert.equal(row[10], entry.id);
+    assert.equal(row[11], entry.message);
+    assert.equal(row[12], 'Bhubaneswar');
+    assert.equal(f.post(entry).duplicate, true);
+  }
+  assert.equal(f.tabs.Members.rows.length, 5);
+  f.context.setup();
+  assert.equal(f.tabs.Members.rows[0].length, 13);
 });

@@ -27,6 +27,16 @@ The Worker limits each IP to five requests per minute and allows the production 
 
 Google Sheets is now the only submission store. Existing Supabase records are not migrated or deleted; retain/export them separately. The `supabase/migrations` directory is historical and is not used by this integration.
 
+## Import previous members
+
+1. Back up the spreadsheet. Rename the current `Members` tab to `Members Backup` so existing website submissions remain available.
+2. Create a new tab named exactly `Members`. Copy the old member table, including its heading row, into cell A1. Preserve phone numbers as text when copying/importing so leading zeros stay intact.
+3. The supported old headings are `Timestamp`, `Email Address`, `1. Full Name`, `2. Mobile Number`, and `8. Want to volunteer?`. Leading/trailing spaces and capitalization do not matter. Extra columns such as Instagram, college, age, interests, and referral remain intact.
+4. Replace the Google Apps Script editor contents with this repository's `Code.gs`, save, select `setup`, and run it. Keep the existing Script Properties. Setup adds missing `Submission ID`, `Message`, and `City` columns to the right; it preserves historical rows and existing headings.
+5. Select **Deploy → Manage deployments → Edit → Version: New version → Deploy** to update the existing web app while keeping its URL. Submit one test member and confirm it appears under the old rows with the volunteering answer in the matching column.
+
+New submissions match columns by heading in `Members`; fields the website does not collect remain blank. Historical rows can keep blank submission IDs. `Members Backup` is retained separately and is not automatically merged. Partners, Stalls, and Creators retain their existing column order.
+
 ## Checks
 
 Run `npm run test:forms`, `npm run lint`, `npm run typecheck`, and `npm run build`.

@@ -6,6 +6,20 @@ const FORM_TABS = {
 };
 const FIELDS = ['id', 'created_at', 'name', 'email', 'phone', 'city', 'organization', 'stall_type', 'portfolio_url', 'message'];
 const HEADERS = ['Submission ID', 'Submitted At', 'Full Name', 'Email', 'Phone', 'City', 'Organization / Stall', 'Stall Type', 'Portfolio / Social Link', 'Message'];
+const MEMBER_ALIASES = {
+  'timestamp': 'created_at', 'email address': 'email', '1. full name': 'name',
+  '2. mobile number': 'phone', '8. want to volunteer?': 'volunteering',
+  'interested in volunteering?': 'volunteering',
+};
+
+function memberFields(sheet) {
+  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  return headers.map(function (header) {
+    const normalized = String(header).trim().replace(/\s+/g, ' ').toLowerCase();
+    const standard = HEADERS.findIndex(function (value) { return value.toLowerCase() === normalized; });
+    return standard >= 0 ? FIELDS[standard] : MEMBER_ALIASES[normalized] || null;
+  });
+}
 
 // Set SPREADSHEET_ID in Script Properties before running setup.
 function setup() {
@@ -22,6 +36,20 @@ function setup() {
       sheet.setFrozenRows(1);
       sheet.setColumnWidths(1, HEADERS.length, 180);
       sheet.setColumnWidth(10, 360);
+    }
+    if (name === 'Members') {
+      const mapped = memberFields(sheet);
+      ['created_at', 'email', 'name', 'phone'].forEach(function (field) {
+        if (mapped.indexOf(field) < 0) throw new Error('Members tab is missing a column for ' + field);
+      });
+      [['id', 'Submission ID'], ['message', 'Message'], ['city', 'City'], ['volunteering', '8. Want to volunteer?']].forEach(function (entry) {
+        if (mapped.indexOf(entry[0]) < 0) {
+          const column = sheet.getLastColumn() + 1;
+          sheet.getRange(1, column).setValues([[entry[1]]]).setBackground('#D91515').setFontColor('#FFFFFF').setFontWeight('bold');
+          sheet.setColumnWidth(column, 180);
+          mapped.push(entry[0]);
+        }
+      });
     }
   });
   if (!properties.getProperty('WEBHOOK_TOKEN')) {
@@ -53,11 +81,20 @@ function doPost(e) {
     const book = SpreadsheetApp.openById(properties.getProperty('SPREADSHEET_ID'));
     const sheet = book.getSheetByName(tab);
     if (!sheet) throw new Error('Run setup first');
+    const fields = record.form_type === 'member' ? memberFields(sheet) : FIELDS;
+    const idColumn = fields.indexOf('id') + 1;
+    const dateColumn = fields.indexOf('created_at') + 1;
+    if (!idColumn || !dateColumn) throw new Error('Run setup first to prepare Members columns');
     const lastRow = sheet.getLastRow();
-    const duplicate = lastRow > 1 && sheet.getRange(2, 1, lastRow - 1, 1)
+    const duplicate = lastRow > 1 && sheet.getRange(2, idColumn, lastRow - 1, 1)
       .createTextFinder(String(record.id)).matchEntireCell(true).useRegularExpression(false).findNext();
     if (!duplicate) {
-      const values = FIELDS.map(function (field) {
+      const values = fields.map(function (field) {
+        if (!field) return '';
+        if (field === 'volunteering') {
+          const match = String(record.message || '').match(/^Interested in volunteering: (Yes|No|Maybe)(?:\r?\n|$)/);
+          return match ? match[1] : '';
+        }
         if (field === 'created_at') {
           const date = new Date(record[field]);
           if (isNaN(date.getTime())) throw new Error('Invalid submission date');
@@ -68,9 +105,9 @@ function doPost(e) {
         return /^[\s]*[=+\-@]/.test(value) ? "'" + value : value;
       });
       const nextRow = lastRow + 1;
-      sheet.getRange(nextRow, 1, 1, FIELDS.length).setNumberFormat('@');
-      sheet.getRange(nextRow, 1, 1, FIELDS.length).setValues([values]);
-      sheet.getRange(nextRow, 2).setNumberFormat('dd/MM/yyyy HH:mm');
+      sheet.getRange(nextRow, 1, 1, fields.length).setNumberFormat('@');
+      sheet.getRange(nextRow, 1, 1, fields.length).setValues([values]);
+      sheet.getRange(nextRow, dateColumn).setNumberFormat('dd/MM/yyyy HH:mm');
       SpreadsheetApp.flush();
     }
     return ContentService.createTextOutput(JSON.stringify({ ok: true, duplicate: Boolean(duplicate) }))
