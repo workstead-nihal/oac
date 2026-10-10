@@ -75,6 +75,19 @@ function fixture() {
 
 const record = { id: 'test-id', created_at: '2026-10-09T12:00:00Z', name: 'Test', email: 'test@example.com', phone: '+919000000000' };
 
+test('recognizes current unnumbered member columns without adding duplicates', () => {
+  const f = fixture();
+  const headings = ['Submission ID', 'Submitted At', 'Email Address', 'Full Name', 'Mobile Number', 'Instagram handle', 'College/School & Place', 'Age range', 'How did you find us?', 'Want to volunteer?', 'Message'];
+  f.tabs.Members.rows.splice(0, f.tabs.Members.rows.length, [...headings]);
+  f.context.setup();
+  assert.deepEqual(f.tabs.Members.rows[0], headings);
+  f.post({ ...record, form_type: 'member', social_media_id: 'test_handle', city: 'Test College', age_range: '18–24', referral: 'Friend', message: 'Interested in volunteering: Yes\n\nHello' });
+  const row = f.tabs.Members.rows[1];
+  assert.equal(row[0], record.id);
+  assert.equal(row[1].getTime(), Date.parse(record.created_at));
+  assert.deepEqual(row.slice(2), [record.email, record.name, "'+919000000000", 'test_handle', 'Test College', '18–24', 'Friend', 'Yes', 'Hello']);
+});
+
 test('returns safe JSON for script failures instead of Google HTML', () => {
   const f = fixture();
   assert.equal(f.context.doPost().error, 'Unauthorized');

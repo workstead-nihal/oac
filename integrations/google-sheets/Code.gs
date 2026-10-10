@@ -14,6 +14,8 @@ const MEMBER_ALIASES = {
   '4. college/school & place': 'city', 'city / college or school': 'city',
   '5. age range': 'age_range', 'age range': 'age_range',
   '7. how did you find us?': 'referral', 'how did you find us?': 'referral',
+  'mobile number': 'phone', 'instagram handle': 'social_media_id',
+  'college/school & place': 'city', 'want to volunteer?': 'volunteering',
 };
 
 function memberFields(sheet) {
