@@ -298,6 +298,15 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
                   />
                 </Field>
 
+                {selectedForm === 'member' && (
+                  <Field icon={User} label="Age range" required>
+                    <select required aria-label="Age range" value={ageRange} onChange={(e) => setAgeRange(e.target.value)} className="w-full bg-[#0C0C0C] text-white outline-none text-sm">
+                      <option value="">Select your age range</option>
+                      {['Under 13', '13–17', '18–24', '25–34', '35+'].map((range) => <option key={range} value={range}>{range}</option>)}
+                    </select>
+                  </Field>
+                )}
+
                 {/* Email */}
                 <Field icon={Mail} label="Email" required>
                   <input
@@ -338,12 +347,6 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
                   <>
                     <Field icon={LinkIcon} label="Social media ID (optional)">
                       <input type="text" value={socialMediaId} onChange={(e) => setSocialMediaId(e.target.value)} placeholder="e.g. Instagram @yourhandle" maxLength={200} className="w-full bg-transparent text-white placeholder-gray-600 outline-none text-sm" />
-                    </Field>
-                    <Field icon={User} label="Age range" required>
-                      <select required aria-label="Age range" value={ageRange} onChange={(e) => setAgeRange(e.target.value)} className="w-full bg-[#0C0C0C] text-white outline-none text-sm">
-                        <option value="">Select your age range</option>
-                        {['Under 13', '13–17', '18–24', '25–34', '35+'].map((range) => <option key={range} value={range}>{range}</option>)}
-                      </select>
                     </Field>
                     <Field icon={User} label="How did you find us? (optional)">
                       <input type="text" value={referral} onChange={(e) => setReferral(e.target.value)} placeholder="e.g. Instagram, a friend, an event" maxLength={300} className="w-full bg-transparent text-white placeholder-gray-600 outline-none text-sm" />
