@@ -57,6 +57,9 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
   const [organization, setOrganization] = useState('');
   const [stallType, setStallType] = useState('');
   const [volunteering, setVolunteering] = useState('');
+  const [socialMediaId, setSocialMediaId] = useState('');
+  const [ageRange, setAgeRange] = useState('');
+  const [referral, setReferral] = useState('');
 
   useEffect(() => {
     if (isOpen) {
@@ -96,6 +99,9 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
     setOrganization('');
     setStallType('');
     setVolunteering('');
+    setSocialMediaId('');
+    setAgeRange('');
+    setReferral('');
     setError(null);
   };
 
@@ -122,6 +128,10 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
       setError('Please select whether you are interested in volunteering.');
       return;
     }
+    if (selectedForm === 'member' && (!city.trim() || !ageRange)) {
+      setError('Please enter your city / college or school and select your age range.');
+      return;
+    }
     setSubmitting(true);
     setError(null);
 
@@ -134,6 +144,9 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
     if (city) payload.city = city;
     if (message) payload.message = message;
     if (selectedForm === 'member') {
+      payload.social_media_id = socialMediaId.trim();
+      payload.age_range = ageRange;
+      payload.referral = referral.trim();
       payload.message = `Interested in volunteering: ${volunteering}${message ? `\n\n${message}` : ''}`;
     }
     if (selectedForm === 'collab' && portfolioUrl) payload.portfolio_url = portfolioUrl;
@@ -310,15 +323,33 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
                 </Field>
 
                 {/* City */}
-                <Field icon={MapPin} label="City (optional)">
+                <Field icon={MapPin} label={selectedForm === 'member' ? 'City / College or School' : 'City (optional)'} required={selectedForm === 'member'}>
                   <input
                     type="text"
+                    required={selectedForm === 'member'}
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     placeholder="e.g. Bhubaneswar"
                     className="w-full bg-transparent text-white placeholder-gray-600 outline-none text-sm"
                   />
                 </Field>
+
+                {selectedForm === 'member' && (
+                  <>
+                    <Field icon={LinkIcon} label="Social media ID (optional)">
+                      <input type="text" value={socialMediaId} onChange={(e) => setSocialMediaId(e.target.value)} placeholder="e.g. Instagram @yourhandle" maxLength={200} className="w-full bg-transparent text-white placeholder-gray-600 outline-none text-sm" />
+                    </Field>
+                    <Field icon={User} label="Age range" required>
+                      <select required aria-label="Age range" value={ageRange} onChange={(e) => setAgeRange(e.target.value)} className="w-full bg-[#0C0C0C] text-white outline-none text-sm">
+                        <option value="">Select your age range</option>
+                        {['Under 13', '13–17', '18–24', '25–34', '35+'].map((range) => <option key={range} value={range}>{range}</option>)}
+                      </select>
+                    </Field>
+                    <Field icon={User} label="How did you find us? (optional)">
+                      <input type="text" value={referral} onChange={(e) => setReferral(e.target.value)} placeholder="e.g. Instagram, a friend, an event" maxLength={300} className="w-full bg-transparent text-white placeholder-gray-600 outline-none text-sm" />
+                    </Field>
+                  </>
+                )}
 
                 {/* Organization (partner / stall) */}
                 {(selectedForm === 'partner' || selectedForm === 'stall') && (

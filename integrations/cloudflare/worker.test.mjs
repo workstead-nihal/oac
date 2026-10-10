@@ -11,6 +11,7 @@ const env = {
 const input = {
   id: '6095d1ad-5085-42d9-bdcb-e6a1bc69ec20', form_type: 'member',
   name: ' Test Member ', email: 'test@example.com', phone: '+919000000000',
+  city: 'Bhubaneswar', age_range: '18–24', social_media_id: '@member', referral: 'Friend',
 };
 function request(body = input, { origin = 'https://joinoac.in', method = 'POST', path = '/submit' } = {}) {
   return new Request(`https://oac-forms.example.workers.dev${path}`, {
@@ -41,6 +42,9 @@ test('saves all four categories using the existing Apps Script contract', async 
     assert.equal(payload.record.name, 'Test Member');
     assert.ok(Date.parse(payload.record.created_at));
     assert.equal(payload.record.id, input.id);
+    assert.equal(payload.record.social_media_id, '@member');
+    assert.equal(payload.record.age_range, '18–24');
+    assert.equal(payload.record.referral, 'Friend');
   }
 });
 
@@ -51,6 +55,7 @@ test('rejects invalid fields without forwarding them', async (t) => {
     { id: 'bad-id' }, { message: 'a'.repeat(4001) }, { city: {} },
     { portfolio_url: 'javascript:alert(1)' }, { form_type: 'partner', organization: '' },
     { form_type: 'stall', organization: '' },
+    { city: ' ' }, { age_range: '' }, { age_range: 'invalid' }, { social_media_id: {} }, { referral: 'x'.repeat(301) },
   ]) {
     assert.equal((await worker.fetch(request({ ...input, ...invalid }), env)).status, 400);
   }

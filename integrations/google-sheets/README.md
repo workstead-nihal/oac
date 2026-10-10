@@ -35,7 +35,9 @@ Google Sheets is now the only submission store. Existing Supabase records are no
 4. Replace the Google Apps Script editor contents with this repository's `Code.gs`, save, select `setup`, and run it. Keep the existing Script Properties. Setup adds missing `Submission ID`, `Message`, and `City` columns to the right; it preserves historical rows and existing headings.
 5. Select **Deploy → Manage deployments → Edit → Version: New version → Deploy** to update the existing web app while keeping its URL. Submit one test member and confirm it appears under the old rows with the volunteering answer in the matching column.
 
-New submissions match columns by heading in `Members`; fields the website does not collect remain blank. Historical rows can keep blank submission IDs. `Members Backup` is retained separately and is not automatically merged. Partners, Stalls, and Creators retain their existing column order.
+New submissions match columns by heading in `Members`. Social media ID maps to `3. Instagram handle`, City / College or School maps to `4. College/School & Place`, age maps to `5. Age range`, and referral maps to `7. How did you find us?`. City / College or School and age range are required for new members; social media and referral are optional. Interests remain blank for new submissions because the website does not collect them.
+
+If the imported table has no Timestamp column, setup adds `Submitted At` to the right without moving old values. Missing social media, age, and referral columns are also added automatically. Historical rows can keep blank submission IDs and timestamps. `Members Backup` is retained separately and is not automatically merged. Partners, Stalls, and Creators retain their existing column order. Redeploy Apps Script before testing the new member fields so their values reach the matching columns.
 
 ## Checks
 

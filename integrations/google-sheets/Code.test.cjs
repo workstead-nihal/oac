@@ -114,22 +114,38 @@ test('supports previous member headings while preserving extra columns and old r
   f.context.setup();
   assert.deepEqual(f.tabs.Members.rows[1], previous);
   assert.deepEqual(f.tabs.Members.rows[0].slice(0, 10), headings);
-  assert.deepEqual(f.tabs.Members.rows[0].slice(10), ['Submission ID', 'Message', 'City']);
+  assert.deepEqual(f.tabs.Members.rows[0].slice(10), ['Submission ID', 'Message']);
   for (const volunteering of ['Yes', 'No', 'Maybe']) {
-    const entry = { ...record, id: `test-${volunteering}`, form_type: 'member', city: 'Bhubaneswar', message: `Interested in volunteering: ${volunteering}\n\nHello` };
+    const entry = { ...record, id: `test-${volunteering}`, form_type: 'member', city: 'Bhubaneswar', social_media_id: '@new', age_range: '18–24', referral: 'Instagram', message: `Interested in volunteering: ${volunteering}\n\nHello` };
     f.post(entry);
     const row = f.tabs.Members.rows.at(-1);
     assert.equal(row[1], record.email);
     assert.equal(row[2], record.name);
     assert.equal(row[3], "'+919000000000");
-    assert.deepEqual(row.slice(4, 9), ['', '', '', '', '']);
+    assert.deepEqual(row.slice(4, 9), ["'@new", 'Bhubaneswar', '18–24', '', 'Instagram']);
     assert.equal(row[9], volunteering);
     assert.equal(row[10], entry.id);
     assert.equal(row[11], entry.message);
-    assert.equal(row[12], 'Bhubaneswar');
     assert.equal(f.post(entry).duplicate, true);
   }
   assert.equal(f.tabs.Members.rows.length, 5);
   f.context.setup();
-  assert.equal(f.tabs.Members.rows[0].length, 13);
+  assert.equal(f.tabs.Members.rows[0].length, 12);
+});
+
+test('setup restores a missing timestamp without moving imported member data', () => {
+  const f = fixture();
+  const headings = ['Email Address', '1. Full Name', '2. Mobile Number', '4. College/School & Place', '5. Age range'];
+  const previous = ['old@example.com', 'Old Member', '0123456789', 'College', '18–24'];
+  f.tabs.Members.rows.splice(0, f.tabs.Members.rows.length, [...headings], [...previous]);
+  f.context.setup();
+  assert.deepEqual(f.tabs.Members.rows[1], previous);
+  assert.deepEqual(f.tabs.Members.rows[0].slice(0, 5), headings);
+  f.post({ ...record, form_type: 'member', city: 'New College', age_range: '25–34' });
+  const headers = f.tabs.Members.rows[0];
+  const row = f.tabs.Members.rows[2];
+  assert.equal(row[3], 'New College');
+  assert.equal(row[4], '25–34');
+  assert.equal(row[headers.indexOf('Submitted At')].getTime(), Date.parse(record.created_at));
+  assert.equal(f.post({ ...record, form_type: 'member' }).duplicate, true);
 });

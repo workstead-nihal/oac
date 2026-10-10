@@ -10,6 +10,10 @@ const MEMBER_ALIASES = {
   'timestamp': 'created_at', 'email address': 'email', '1. full name': 'name',
   '2. mobile number': 'phone', '8. want to volunteer?': 'volunteering',
   'interested in volunteering?': 'volunteering',
+  '3. instagram handle': 'social_media_id', 'social media id': 'social_media_id',
+  '4. college/school & place': 'city', 'city / college or school': 'city',
+  '5. age range': 'age_range', 'age range': 'age_range',
+  '7. how did you find us?': 'referral', 'how did you find us?': 'referral',
 };
 
 function memberFields(sheet) {
@@ -39,10 +43,10 @@ function setup() {
     }
     if (name === 'Members') {
       const mapped = memberFields(sheet);
-      ['created_at', 'email', 'name', 'phone'].forEach(function (field) {
+      ['email', 'name', 'phone'].forEach(function (field) {
         if (mapped.indexOf(field) < 0) throw new Error('Members tab is missing a column for ' + field);
       });
-      [['id', 'Submission ID'], ['message', 'Message'], ['city', 'City'], ['volunteering', '8. Want to volunteer?']].forEach(function (entry) {
+      [['id', 'Submission ID'], ['created_at', 'Submitted At'], ['message', 'Message'], ['city', 'City / College or School'], ['volunteering', '8. Want to volunteer?'], ['social_media_id', 'Social media ID'], ['age_range', 'Age range'], ['referral', 'How did you find us?']].forEach(function (entry) {
         if (mapped.indexOf(entry[0]) < 0) {
           const column = sheet.getLastColumn() + 1;
           sheet.getRange(1, column).setValues([[entry[1]]]).setBackground('#D91515').setFontColor('#FFFFFF').setFontWeight('bold');

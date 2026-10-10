@@ -1,6 +1,7 @@
 const fields = {
   name: 120, email: 254, phone: 40, city: 120, organization: 200,
   stall_type: 100, portfolio_url: 2048, message: 4000,
+  social_media_id: 200, age_range: 40, referral: 300,
 };
 const forms = ['member', 'partner', 'stall', 'collab'];
 
@@ -52,6 +53,9 @@ export default {
       return reply(400, { error: 'Please enter your name and a valid email address' });
     }
     if (record.form_type === 'member' && !record.phone) return reply(400, { error: 'Member phone number is required' });
+    if (record.form_type === 'member' && (!record.city || !['Under 13', '13–17', '18–24', '25–34', '35+'].includes(record.age_range))) {
+      return reply(400, { error: 'City / College or School and a valid age range are required' });
+    }
     if (['partner', 'stall'].includes(record.form_type) && !record.organization) {
       return reply(400, { error: 'Organization or stall name is required' });
     }
