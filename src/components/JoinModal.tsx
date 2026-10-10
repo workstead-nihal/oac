@@ -56,6 +56,7 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
   const [portfolioUrl, setPortfolioUrl] = useState('');
   const [organization, setOrganization] = useState('');
   const [stallType, setStallType] = useState('');
+  const [volunteering, setVolunteering] = useState('');
 
   useEffect(() => {
     if (isOpen) {
@@ -94,6 +95,7 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
     setPortfolioUrl('');
     setOrganization('');
     setStallType('');
+    setVolunteering('');
     setError(null);
   };
 
@@ -116,6 +118,10 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
       setError('Please enter your phone number to become a member.');
       return;
     }
+    if (selectedForm === 'member' && !volunteering) {
+      setError('Please select whether you are interested in volunteering.');
+      return;
+    }
     setSubmitting(true);
     setError(null);
 
@@ -127,6 +133,9 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
     if (phone.trim()) payload.phone = phone.trim();
     if (city) payload.city = city;
     if (message) payload.message = message;
+    if (selectedForm === 'member') {
+      payload.message = `Interested in volunteering: ${volunteering}${message ? `\n\n${message}` : ''}`;
+    }
     if (selectedForm === 'collab' && portfolioUrl) payload.portfolio_url = portfolioUrl;
     if (selectedForm === 'partner' && organization) payload.organization = organization;
     if (selectedForm === 'stall') {
@@ -361,6 +370,30 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
                       className="w-full bg-transparent text-white placeholder-gray-600 outline-none text-sm"
                     />
                   </Field>
+                )}
+
+                {selectedForm === 'member' && (
+                  <fieldset>
+                    <legend className="block text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">
+                      Interested in volunteering? <span className="text-[#D91515]">*</span>
+                    </legend>
+                    <div className="flex flex-wrap gap-3">
+                      {['Yes', 'No', 'Maybe'].map((option) => (
+                        <label key={option} className="flex items-center gap-2 px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-sm text-white cursor-pointer">
+                          <input
+                            type="radio"
+                            name="volunteering"
+                            value={option}
+                            required
+                            checked={volunteering === option}
+                            onChange={(e) => setVolunteering(e.target.value)}
+                            className="accent-[#F3B334]"
+                          />
+                          {option}
+                        </label>
+                      ))}
+                    </div>
+                  </fieldset>
                 )}
 
                 {/* Message */}
