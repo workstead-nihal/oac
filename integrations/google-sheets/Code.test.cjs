@@ -53,7 +53,7 @@ function fixture() {
   };
   let releases = 0;
   const context = {
-    console: { log() {} },
+    console: { log() {}, error() {} },
     PropertiesService: { getScriptProperties: () => ({
       getProperty: (key) => properties[key], setProperty: (key, value) => { properties[key] = value; },
     }) },
@@ -65,7 +65,7 @@ function fixture() {
   vm.createContext(context);
   vm.runInContext(fs.readFileSync(`${__dirname}/Code.gs`, 'utf8'), context);
   context.setup();
-  const post = (record, token = 'test-token') => context.doPost({
+  const post = (record, token = 'test-token') => context.saveSubmission({
     parameter: { token }, postData: { contents: JSON.stringify({
       type: 'INSERT', schema: 'public', table: 'join_requests', record,
     }) },
@@ -74,6 +74,18 @@ function fixture() {
 }
 
 const record = { id: 'test-id', created_at: '2026-10-09T12:00:00Z', name: 'Test', email: 'test@example.com', phone: '+919000000000' };
+
+test('returns safe JSON for script failures instead of Google HTML', () => {
+  const f = fixture();
+  assert.equal(f.context.doPost().error, 'Unauthorized');
+  const event = { parameter: { token: 'test-token' }, postData: { contents: JSON.stringify({ type: 'INSERT', schema: 'public', table: 'join_requests', record: { ...record, form_type: 'member' } }) } };
+  delete f.tabs.Members;
+  assert.equal(f.context.doPost(event).error, 'Run setup first');
+  event.postData.contents = 'private malformed input';
+  const result = f.context.doPost(event);
+  assert.equal(result.ok, false);
+  assert.equal(JSON.stringify(result).includes('private malformed input'), false);
+});
 
 test('routes all four categories to separate tabs and deduplicates deliveries', () => {
   const f = fixture();

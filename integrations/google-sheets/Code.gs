@@ -67,6 +67,19 @@ function setup() {
 }
 
 function doPost(e) {
+  try {
+    return saveSubmission(e);
+  } catch (error) {
+    console.error(String(error));
+    const message = String(error && error.message || error);
+    const known = ['Unauthorized', 'Unsupported event', 'Invalid submission', 'Member phone required', 'Run setup first', 'Run setup first to prepare Members columns', 'Invalid submission date'];
+    const safe = known.indexOf(message) >= 0 ? message : 'Google Sheets could not save the submission. Check spreadsheet access and the Apps Script execution error.';
+    return ContentService.createTextOutput(JSON.stringify({ ok: false, error: safe, code: 'script_save_failed' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function saveSubmission(e) {
   const properties = PropertiesService.getScriptProperties();
   const token = properties.getProperty('WEBHOOK_TOKEN');
   if (!token || !e || !e.parameter || e.parameter.token !== token) {

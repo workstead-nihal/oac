@@ -91,7 +91,10 @@ export default {
       try { result = JSON.parse(text); } catch {
         return reply(502, { error: 'Google did not return a valid script response. Check the Apps Script execution log.', code: 'script_invalid_response' });
       }
-      if (!response.ok || result.ok !== true) throw new Error();
+      if (result.ok !== true) {
+        const safeErrors = ['Unauthorized', 'Unsupported event', 'Invalid submission', 'Member phone required', 'Run setup first', 'Run setup first to prepare Members columns', 'Invalid submission date'];
+        return reply(502, { error: safeErrors.includes(result.error) ? `Apps Script: ${result.error}` : 'Google Sheets could not save the submission. Check spreadsheet access and the Apps Script execution error.', code: 'script_save_failed' });
+      }
       return reply(200, { ok: true, id: record.id });
     } catch (error) {
       return reply(502, { error: 'Could not confirm your submission. Please retry or email info@joinoac.in', code: error?.name === 'TimeoutError' ? 'google_timeout' : 'google_connection_failed' });
