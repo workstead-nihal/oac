@@ -25,6 +25,13 @@ Run `npm run preview` to preview the production build locally.
 
 ## Upcoming event updates
 
+The mobile menu uses a solid dark background, locks background page scrolling
+while open, and scrolls within the available screen height on short phones.
+The hero's decorative Scroll button is removed on all screen sizes; Discover
+More still takes visitors to About. Test the menu at 360px width, both at the
+top and after scrolling: content behind it must not show through, menu links
+must remain reachable, and closing the menu must restore page scrolling.
+
 Event cards live in `src/components/Events.tsx`. OTAKU COMMUNITY DAY 2026 is
 scheduled for 22 November 2026, 12:00 pm–5:00 pm IST, at 3rd Space, Near
 Esplanade, Rasulgarh. Early bird tickets are coming soon; the card does not

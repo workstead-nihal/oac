@@ -1,3 +1,4 @@
+// Purpose: shared navigation with an opaque, independently scrollable mobile menu.
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import logo from '../../images/logo/Odisha Anime Community Trandsperent Logo.png';
@@ -14,16 +15,28 @@ const navLinks = [
   { label: 'Contact', href: '#footer' },
 ];
 
+// Renders navigation; onJoinClick opens membership, and menu state controls background scrolling.
 export default function Navbar({ onJoinClick }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
+    // Tracks page movement so the closed header gains a readable background after scrolling.
     const handleScroll = () => setScrolled(window.scrollY > 40);
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    // Restores the previous scroll setting when the menu closes or navigation unmounts.
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [mobileOpen]);
+
+  // Closes the menu and moves to the selected section; href is a local section selector.
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
     const el = document.querySelector(href);
@@ -33,8 +46,8 @@ export default function Navbar({ onJoinClick }: NavbarProps) {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-[#0C0C0C]/95 backdrop-blur-md border-b border-white/5 py-3'
+        scrolled || mobileOpen
+          ? 'bg-[#0C0C0C] border-b border-white/5 py-3'
           : 'bg-transparent py-5'
       }`}
     >
@@ -93,6 +106,7 @@ export default function Navbar({ onJoinClick }: NavbarProps) {
           className="md:hidden text-white p-2"
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
+          aria-controls="mobile-navigation"
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -100,7 +114,7 @@ export default function Navbar({ onJoinClick }: NavbarProps) {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-[#0C0C0C]/98 backdrop-blur-lg border-b border-white/5 animate-slide-up">
+        <div id="mobile-navigation" className="md:hidden absolute top-full left-0 right-0 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain bg-[#0C0C0C] border-b border-white/5">
           <ul className="flex flex-col p-4 gap-2">
             {navLinks.map((link) => (
               <li key={link.href}>

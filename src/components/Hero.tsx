@@ -1,10 +1,13 @@
+// Purpose: introduce OAC and provide community actions without an overlapping scroll indicator.
 import { Calendar, MapPin, Sparkles } from 'lucide-react';
 
 interface HeroProps {
   onJoinClick: () => void;
 }
 
+// Renders the welcome section; onJoinClick opens membership and Discover More moves to About.
 export default function Hero({ onJoinClick }: HeroProps) {
+  // Moves to the About section without adding another decorative scroll control.
   const scrollToAbout = () => {
     document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -92,17 +95,6 @@ export default function Hero({ onJoinClick }: HeroProps) {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <button
-        onClick={scrollToAbout}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-gray-500 hover:text-[#F3B334] transition-colors"
-        aria-label="Scroll down"
-      >
-        <span className="text-[10px] tracking-[0.3em] uppercase">Scroll</span>
-        <div className="w-6 h-10 rounded-full border-2 border-current flex justify-center pt-2">
-          <div className="w-1 h-2 rounded-full bg-current animate-scroll-indicator" />
-        </div>
-      </button>
     </section>
   );
 }
