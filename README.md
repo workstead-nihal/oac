@@ -28,7 +28,8 @@ Run `npm run preview` to preview the production build locally.
 Event cards live in `src/components/Events.tsx`. OTAKU COMMUNITY DAY 2026 is
 scheduled for 22 November 2026, 12:00 pm–5:00 pm IST, at 3rd Space, Near
 Esplanade, Rasulgarh. Early bird tickets are coming soon; the card does not
-offer a booking action while sales are pending.
+offer a booking action while sales are pending. Its Get Involved button still
+opens the existing community involvement form; this is separate from ticket sales.
 
 Sketch & Sip Meetup and Gaming Tournament Night have `inactive: true`.
 Their cards use grey styling and an explicit Inactive label, and hide old

@@ -129,16 +129,20 @@ export default function Events({ onJoinClick }: EventProps) {
               {/* CTA */}
               {event.inactive ? (
                 <p className="text-sm font-medium text-gray-400">Currently inactive — updates coming later.</p>
-              ) : event.ticketNotice ? (
-                <p className="text-sm font-medium text-[#F3B334]" role="status">{event.ticketNotice}</p>
               ) : (
+                <>
+                {event.ticketNotice && (
+                  <p className="text-sm font-medium text-[#F3B334]" role="status">{event.ticketNotice}</p>
+                )}
                 <button
+                type="button"
                 onClick={onJoinClick}
-                className="inline-flex items-center gap-2 text-sm font-medium text-white group-hover:text-[#F3B334] transition-colors"
+                className="inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-white group-hover:text-[#F3B334] transition-colors"
               >
-                Get involved
+                Get Involved
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
+                </>
               )}
             </div>
           ))}
