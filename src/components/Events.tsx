@@ -1,3 +1,4 @@
+// Purpose: show OAC gatherings and clearly distinguish inactive events from open opportunities.
 import { Calendar, MapPin, Clock, ArrowRight } from 'lucide-react';
 
 interface EventProps {
@@ -6,11 +7,12 @@ interface EventProps {
 
 const events = [
   {
-    title: 'OAC Cosplay Con 2026',
-    date: 'Coming Soon',
-    location: 'Bhubaneswar',
-    time: 'Full Day Event',
-    desc: 'Our flagship cosplay convention featuring stage performances, costume contests, and artist alley.',
+    title: 'OTAKU COMMUNITY DAY 2026',
+    date: '22 November 2026',
+    location: '3rd Space, Near Esplanade, Rasulgarh',
+    time: '12:00 pm to 5:00 pm IST',
+    desc: "Introducing OTAKU COMMUNITY DAY 2026 — a day dedicated to anime, cosplay, games, creators, and bringing Odisha's POP culture community together! ❤️‍🔥\n\nWhether you're a casual anime watcher, a hardcore otaku, a cosplayer, a Gamer or just looking for people who share your interests. THIS IS YOUR PLACE.",
+    ticketNotice: 'Early Bird Tickets will be live soon',
     tag: 'Flagship Event',
     featured: true,
   },
@@ -31,6 +33,7 @@ const events = [
     desc: 'Bring your sketchbook and draw with fellow artists. All skill levels welcome.',
     tag: 'Art Meet',
     featured: false,
+    inactive: true,
   },
   {
     title: 'Gaming Tournament Night',
@@ -40,9 +43,11 @@ const events = [
     desc: 'Compete in fighting games, racing, and party games. Prizes for champions.',
     tag: 'Gaming',
     featured: false,
+    inactive: true,
   },
 ];
 
+// Renders event cards; onJoinClick opens the involvement form only for active events.
 export default function Events({ onJoinClick }: EventProps) {
   return (
     <section
@@ -72,10 +77,12 @@ export default function Events({ onJoinClick }: EventProps) {
           {events.map((event) => (
             <div
               key={event.title}
-              className={`group relative p-6 sm:p-8 rounded-2xl border transition-all duration-300 transform hover:-translate-y-1 ${
-                event.featured
-                  ? 'bg-gradient-to-br from-[#D91515]/15 to-[#F3B334]/5 border-[#D91515]/30 hover:border-[#D91515]/50'
-                  : 'bg-white/[0.03] border-white/5 hover:border-[#F3B334]/30'
+              className={`group relative p-6 sm:p-8 rounded-2xl border transition-all duration-300 ${
+                event.inactive
+                  ? 'bg-white/[0.02] border-white/10 grayscale'
+                  : event.featured
+                  ? 'bg-gradient-to-br from-[#D91515]/15 to-[#F3B334]/5 border-[#D91515]/30 hover:border-[#D91515]/50 hover:-translate-y-1'
+                  : 'bg-white/[0.03] border-white/5 hover:border-[#F3B334]/30 hover:-translate-y-1'
               }`}
             >
               {/* Tag */}
@@ -85,7 +92,7 @@ export default function Events({ onJoinClick }: EventProps) {
                     ? 'bg-[#D91515] text-white'
                     : 'bg-white/10 text-[#F3B334]'
                 }`}>
-                  {event.tag}
+                  {event.inactive ? 'Inactive' : event.tag}
                 </span>
                 {event.featured && (
                   <span className="text-[#F3B334] text-xs font-medium animate-pulse-slow">
@@ -94,14 +101,15 @@ export default function Events({ onJoinClick }: EventProps) {
                 )}
               </div>
 
-              <h3 className="font-display text-2xl sm:text-3xl text-white mb-3">
+              <h3 className={`font-display text-2xl sm:text-3xl mb-3 ${event.inactive ? 'text-gray-400' : 'text-white'}`}>
                 {event.title}
               </h3>
-              <p className="text-sm text-gray-400 leading-relaxed mb-5">
+              <p className="text-sm text-gray-400 leading-relaxed mb-5 whitespace-pre-line">
                 {event.desc}
               </p>
 
               {/* Event details */}
+              {!event.inactive && (
               <div className="space-y-2.5 mb-6">
                 <div className="flex items-center gap-3 text-sm text-gray-300">
                   <Calendar size={16} className="text-[#D91515] flex-shrink-0" />
@@ -116,15 +124,22 @@ export default function Events({ onJoinClick }: EventProps) {
                   <span>{event.time}</span>
                 </div>
               </div>
+              )}
 
               {/* CTA */}
-              <button
+              {event.inactive ? (
+                <p className="text-sm font-medium text-gray-400">Currently inactive — updates coming later.</p>
+              ) : event.ticketNotice ? (
+                <p className="text-sm font-medium text-[#F3B334]" role="status">{event.ticketNotice}</p>
+              ) : (
+                <button
                 onClick={onJoinClick}
                 className="inline-flex items-center gap-2 text-sm font-medium text-white group-hover:text-[#F3B334] transition-colors"
               >
                 Get involved
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
+              )}
             </div>
           ))}
         </div>

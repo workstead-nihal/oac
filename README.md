@@ -22,3 +22,19 @@ Member applications require a phone number.
 
 Run `npm run lint`, `npm run typecheck`, and `npm run build`.
 Run `npm run preview` to preview the production build locally.
+
+## Upcoming event updates
+
+Event cards live in `src/components/Events.tsx`. OTAKU COMMUNITY DAY 2026 is
+scheduled for 22 November 2026, 12:00 pm–5:00 pm IST, at 3rd Space, Near
+Esplanade, Rasulgarh. Early bird tickets are coming soon; the card does not
+offer a booking action while sales are pending.
+
+Sketch & Sip Meetup and Gaming Tournament Night have `inactive: true`.
+Their cards use grey styling and an explicit Inactive label, and hide old
+schedule details and involvement buttons. Remove the flag only when the team
+confirms that the event is active again.
+
+Run `npm run dev`, then open the local URL printed in the terminal and choose
+Events. Check all four cards at phone and desktop widths. Confirm the flagship
+date, time, venue and ticket notice, and that both inactive cards have no buttons.
