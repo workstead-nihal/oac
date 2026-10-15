@@ -17,12 +17,12 @@ const events = [
     featured: true,
   },
   {
-    title: 'Monthly Anime Screening',
-    date: 'Every 2nd Saturday',
-    location: 'Community Space',
-    time: '4 PM — 7 PM',
-    desc: 'Catch up on seasonal anime with fellow fans. Snacks, discussions, and good vibes included.',
-    tag: 'Recurring',
+    title: 'Halloween Party',
+    date: 'TO BE REVEALED',
+    location: 'TO BE REVEALED',
+    time: 'TO BE REVEALED',
+    desc: 'A Halloween gathering for the OAC community. More details coming soon.',
+    tag: 'COMMING SOON',
     featured: false,
   },
   {
