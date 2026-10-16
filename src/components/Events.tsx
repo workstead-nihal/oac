@@ -6,40 +6,45 @@ interface EventProps {
 
 const events = [
   {
-    title: 'OAC Cosplay Con 2026',
-    date: 'Coming Soon',
-    location: 'Bhubaneswar',
-    time: 'Full Day Event',
-    desc: 'Our flagship cosplay convention featuring stage performances, costume contests, and artist alley.',
+    title: 'OTAKU COMMUNITY DAY 2026',
+    date: '22 November 2026',
+    location: '3rd Space, Near Esplanade, Rasulgarh',
+    time: '12:00 pm to 5:00 pm IST',
+    desc: "Introducing OTAKU COMMUNITY DAY 2026 — a day dedicated to anime, cosplay, games, creators, and bringing Odisha's POP culture community together! 💖\n\nWhether you're a casual anime watcher, a hardcore otaku, a cosplayer, a Gamer or just looking for people who share your interests. THIS IS YOUR PLACE.",
     tag: 'Flagship Event',
     featured: true,
+    inactive: false,
+    statusText: 'Early Bird Tickets will be live soon',
   },
   {
-    title: 'Monthly Anime Screening',
-    date: 'Every 2nd Saturday',
-    location: 'Community Space',
-    time: '4 PM — 7 PM',
-    desc: 'Catch up on seasonal anime with fellow fans. Snacks, discussions, and good vibes included.',
-    tag: 'Recurring',
+    title: 'HALLOWEEN PARTY',
+    date: 'TO BE REVEALED',
+    location: 'TO BE REVEALED',
+    time: 'TO BE REVEALED',
+    desc: 'A Halloween gathering for the OAC community. More details coming soon.',
+    tag: 'Coming Soon',
     featured: false,
+    inactive: false,
   },
   {
-    title: 'Sketch & Sip Meetup',
-    date: 'Monthly',
-    location: 'Cafe Hangouts',
-    time: 'Evening',
-    desc: 'Bring your sketchbook and draw with fellow artists. All skill levels welcome.',
-    tag: 'Art Meet',
+    title: 'SKETCH & SIP MEETUP',
+    date: '',
+    location: '',
+    time: '',
+    desc: 'Bring your sketchbook and draw with fellow artists. All skill levels welcome.\n\nCurrently inactive — updates coming later.',
+    tag: 'Inactive',
     featured: false,
+    inactive: true,
   },
   {
-    title: 'Gaming Tournament Night',
-    date: 'Quarterly',
-    location: 'Gaming Lounge',
-    time: '6 PM Onwards',
-    desc: 'Compete in fighting games, racing, and party games. Prizes for champions.',
-    tag: 'Gaming',
+    title: 'GAMING TOURNAMENT NIGHT',
+    date: '',
+    location: '',
+    time: '',
+    desc: 'Compete in fighting games, racing, and party games. Prizes for champions.\n\nCurrently inactive — updates coming later.',
+    tag: 'Inactive',
     featured: false,
+    inactive: true,
   },
 ];
 
@@ -72,16 +77,20 @@ export default function Events({ onJoinClick }: EventProps) {
           {events.map((event) => (
             <div
               key={event.title}
-              className={`group relative p-6 sm:p-8 rounded-2xl border transition-all duration-300 transform hover:-translate-y-1 ${
-                event.featured
-                  ? 'bg-gradient-to-br from-[#D91515]/15 to-[#F3B334]/5 border-[#D91515]/30 hover:border-[#D91515]/50'
-                  : 'bg-white/[0.03] border-white/5 hover:border-[#F3B334]/30'
+              className={`group relative p-6 sm:p-8 rounded-2xl border transition-all duration-300 ${
+                event.inactive
+                  ? 'bg-[#111111] border-white/5 opacity-80'
+                  : event.featured
+                  ? 'bg-gradient-to-br from-[#D91515]/15 to-[#F3B334]/5 border-[#D91515]/30 hover:border-[#D91515]/50 transform hover:-translate-y-1'
+                  : 'bg-[#111111] border-[#F3B334]/20 hover:border-[#F3B334]/40 transform hover:-translate-y-1'
               }`}
             >
               {/* Tag */}
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-5">
                 <span className={`text-[10px] font-semibold uppercase tracking-[0.2em] px-3 py-1 rounded-full ${
-                  event.featured
+                  event.inactive
+                    ? 'bg-white/10 text-gray-400'
+                    : event.featured
                     ? 'bg-[#D91515] text-white'
                     : 'bg-white/10 text-[#F3B334]'
                 }`}>
@@ -94,37 +103,49 @@ export default function Events({ onJoinClick }: EventProps) {
                 )}
               </div>
 
-              <h3 className="font-display text-2xl sm:text-3xl text-white mb-3">
+              <h3 className={`font-display text-2xl sm:text-3xl mb-4 ${event.inactive ? 'text-gray-400' : 'text-white'}`}>
                 {event.title}
               </h3>
-              <p className="text-sm text-gray-400 leading-relaxed mb-5">
+              
+              <p className="text-sm text-gray-400 leading-relaxed mb-6 whitespace-pre-line">
                 {event.desc}
               </p>
 
-              {/* Event details */}
-              <div className="space-y-2.5 mb-6">
-                <div className="flex items-center gap-3 text-sm text-gray-300">
-                  <Calendar size={16} className="text-[#D91515] flex-shrink-0" />
-                  <span>{event.date}</span>
+              {/* Event details (Hidden if inactive) */}
+              {!event.inactive && (
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-3 text-sm text-gray-300">
+                    <Calendar size={16} className="text-[#D91515] flex-shrink-0" />
+                    <span>{event.date}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-gray-300">
+                    <MapPin size={16} className="text-[#F3B334] flex-shrink-0" />
+                    <span>{event.location}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-gray-300">
+                    <Clock size={16} className="text-[#D91515] flex-shrink-0" />
+                    <span>{event.time}</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-gray-300">
-                  <MapPin size={16} className="text-[#F3B334] flex-shrink-0" />
-                  <span>{event.location}</span>
-                </div>
-                <div className="flex items-center gap-3 text-sm text-gray-300">
-                  <Clock size={16} className="text-[#D91515] flex-shrink-0" />
-                  <span>{event.time}</span>
-                </div>
-              </div>
+              )}
 
-              {/* CTA */}
-              <button
-                onClick={onJoinClick}
-                className="inline-flex items-center gap-2 text-sm font-medium text-white group-hover:text-[#F3B334] transition-colors"
-              >
-                Get involved
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </button>
+              {/* Early Bird / Status Text */}
+              {event.statusText && (
+                <p className="text-[#F3B334] text-sm font-semibold mb-4">
+                  {event.statusText}
+                </p>
+              )}
+
+              {/* CTA (Hidden if inactive) */}
+              {!event.inactive && (
+                <button
+                  onClick={onJoinClick}
+                  className="inline-flex items-center gap-2 text-sm font-medium text-white group-hover:text-[#F3B334] transition-colors"
+                >
+                  Get Involved
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -144,7 +165,21 @@ export default function Events({ onJoinClick }: EventProps) {
             ))}
           </div>
         </div>
+
+        {/* CLICKABLE MODAL TRIGGER */}
+        <div className="mt-12 text-center">
+          <p className="text-gray-500 text-sm">
+            Want to set up your stall?{' '}
+            <button 
+              onClick={onJoinClick}
+              className="text-[#F3B334] font-medium hover:text-white hover:underline transition-colors duration-300"
+            >
+              Click here to setup a stall and showcase at our events.
+            </button>
+          </p>
+        </div>
+
       </div>
     </section>
   );
-}
+} 

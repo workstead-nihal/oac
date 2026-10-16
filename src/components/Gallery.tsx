@@ -9,6 +9,10 @@ interface GalleryItem {
   large: string;
 }
 
+interface GalleryProps {
+  onJoinClick: () => void;
+}
+
 const images = import.meta.glob<string>('../../images/{art,cosplay,event}/*.{jpg,jpeg,png,JPG}', {
   eager: true,
   query: '?url',
@@ -41,7 +45,8 @@ const galleryItems: GalleryItem[] = Object.entries(images).map(([path, image]) =
 });
 
 type FilterType = 'All' | 'Cosplay' | 'Art' | 'Events';
-export default function Gallery() {
+
+export default function Gallery({ onJoinClick }: GalleryProps) {
   const [filter, setFilter] = useState<FilterType>('All');
   const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
 
@@ -54,11 +59,9 @@ export default function Gallery() {
       id="gallery"
       className="relative py-24 sm:py-32 bg-gradient-to-b from-[#0C0C0C] via-[#0a0a0a] to-[#0C0C0C] overflow-hidden"
     >
-      {/* Background accent */}
       <div className="absolute top-1/3 right-0 w-80 h-80 bg-[#F3B334]/5 rounded-full blur-[120px]" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Section heading */}
         <div className="text-center mb-12">
           <p className="text-[#F3B334] text-sm tracking-[0.3em] uppercase font-medium mb-4">
             Member Creativity
@@ -72,7 +75,6 @@ export default function Gallery() {
           </p>
         </div>
 
-        {/* Filter buttons */}
         <div className="flex flex-wrap justify-center gap-3 mb-10">
           {(['All', 'Cosplay', 'Art', 'Events'] as FilterType[]).map((type) => (
             <button
@@ -89,7 +91,6 @@ export default function Gallery() {
           ))}
         </div>
 
-        {/* Masonry grid */}
         <div className="columns-2 md:columns-3 lg:columns-4 gap-4 sm:gap-5">
           {filtered.map((item) => (
             <button
@@ -103,7 +104,6 @@ export default function Gallery() {
                 loading="lazy"
                 className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0C]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div>
@@ -117,7 +117,6 @@ export default function Gallery() {
                   </div>
                 </div>
               </div>
-              {/* Category badge (always visible) */}
               <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-[#0C0C0C]/70 backdrop-blur-sm border border-white/10">
                 <span className="text-[10px] font-medium text-[#F3B334] uppercase tracking-wider">
                   {item.category}
@@ -127,16 +126,20 @@ export default function Gallery() {
           ))}
         </div>
 
-        {/* CTA for artists */}
+        {/* CLICKABLE MODAL TRIGGER */}
         <div className="mt-12 text-center">
           <p className="text-gray-500 text-sm">
             Want your work featured here?{' '}
-            <span className="text-[#F3B334] font-medium">Join as a creator and collaborate with OAC.</span>
+            <button 
+              onClick={onJoinClick}
+              className="text-[#F3B334] font-medium hover:text-white hover:underline transition-colors duration-300"
+            >
+              Join as a creator and collaborate with OAC.
+            </button>
           </p>
         </div>
       </div>
 
-      {/* Lightbox */}
       {lightbox && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm animate-fade-in p-4"
@@ -169,4 +172,4 @@ export default function Gallery() {
       )}
     </section>
   );
-}
+} 
