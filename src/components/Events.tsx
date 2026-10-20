@@ -23,7 +23,7 @@ const events = [
     time: '4:00 PM to 6:30 PM IST',
     desc: 'Bhubaneswar, let’s get spooky! 🎃 Join Coslabs for Halloween games, music, cosplay prizes and creepy bites plus complimentary cake to end the party! Come solo or bring your crew; costumes optional, fun compulsory. 👻',
     ticketUrl: 'https://greet.fydo.in/coslabs-halloween-party-2026',
-    tag: 'join the party NOWW',
+    tag: 'JOIN THE PARTY NOWWWWWWW',
     featured: false,
   },
   {
