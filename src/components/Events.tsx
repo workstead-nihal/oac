@@ -18,9 +18,9 @@ const events = [
   },
   {
     title: 'Halloween Party',
-    date: 'TO BE REVEALED',
-    location: 'TO BE REVEALED',
-    time: 'TO BE REVEALED',
+    date: '31 October 2026',
+    location: 'The Space, Patia',
+    time: '4:00 PM to 6:30 PM IST',
     desc: 'A Halloween gathering for the OAC community. More details coming soon.',
     tag: 'COMMING SOON',
     featured: false,
