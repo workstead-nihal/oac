@@ -21,7 +21,8 @@ const events = [
     date: '31 October 2026',
     location: 'The Space, Patia',
     time: '4:00 PM to 6:30 PM IST',
-    desc: 'A Halloween gathering for the OAC community. More details coming soon.',
+    desc: 'Bhubaneswar, let’s get spooky! 🎃 Join Coslabs for Halloween games, music, cosplay prizes and creepy bites plus complimentary cake to end the party! Come solo or bring your crew; costumes optional, fun compulsory. 👻',
+    ticketUrl: 'https://greet.fydo.in/coslabs-halloween-party-2026',
     tag: 'COMMING SOON',
     featured: false,
   },
@@ -134,6 +135,18 @@ export default function Events({ onJoinClick }: EventProps) {
                 {event.ticketNotice && (
                   <p className="text-sm font-medium text-[#F3B334]" role="status">{event.ticketNotice}</p>
                 )}
+                <div className="flex flex-wrap items-center gap-4">
+                {event.ticketUrl && (
+                  <a
+                    href={event.ticketUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[#D91515] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#F3B334] hover:text-[#0C0C0C] transition-colors"
+                  >
+                    Book Tickets
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </a>
+                )}
                 <button
                 type="button"
                 onClick={onJoinClick}
@@ -142,6 +155,7 @@ export default function Events({ onJoinClick }: EventProps) {
                 Get Involved
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
+                </div>
                 </>
               )}
             </div>

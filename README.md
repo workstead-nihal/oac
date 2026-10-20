@@ -25,6 +25,11 @@ Run `npm run preview` to preview the production build locally.
 
 ## Upcoming event updates
 
+Halloween Party is on 31 October 2026, 4:00 PM–6:30 PM IST, at The Space,
+Patia. Its Book Tickets button uses the event's `ticketUrl` and opens the Fydo
+booking page in a new tab. Update that URL in `src/components/Events.tsx` when
+the organiser changes ticket platforms. Get Involved remains a separate action.
+
 The mobile menu uses a solid dark background, locks background page scrolling
 while open, and scrolls within the available screen height on short phones.
 The hero's decorative Scroll button is removed on all screen sizes; Discover
