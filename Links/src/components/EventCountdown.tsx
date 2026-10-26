@@ -4,26 +4,37 @@ import { Flame, Ghost, Sparkles, Ticket } from 'lucide-react';
 interface EventSchedule {
   id: string;
   badge: string;
+  liveBadge: string;
   title: string;
-  targetDate: number;
+  liveTitle: string;
+  startDate: number;
+  endDate: number;
   url: string;
   ariaLabel: string;
   theme: 'halloween' | 'otaku';
 }
 
 /**
- * Chronological event schedule for the live countdown engine.
- * 1. Coslabs Halloween Party 2026 (Oct 31, 2026 at 4:00 PM IST)
- * 2. Otaku Community Day 2026 (Nov 22, 2026 at 12:00 PM IST)
+ * Chronological event schedule with exact start and end times:
+ * 1. Coslabs Halloween Party 2026:
+ *    - Starts: Oct 31, 2026 at 4:00 PM IST (16:00)
+ *    - Ends:   Oct 31, 2026 at 6:30 PM IST (18:30)
+ * 2. Otaku Community Day 2026:
+ *    - Starts: Nov 22, 2026 at 12:00 PM IST (12:00)
+ *    - Ends:   Nov 22, 2026 at 5:00 PM IST (17:00)
  *
- * When the Halloween party arrives, the ticker automatically advances to OCD 2026.
+ * When Halloween concludes at 6:30 PM on Oct 31, the ticker automatically
+ * transitions to counting down to Otaku Community Day 2026.
  */
 const EVENT_SCHEDULE: EventSchedule[] = [
   {
     id: 'halloween-2026',
     badge: 'COUNTDOWN TO HALLOWEEN 🎃',
-    title: 'Coslabs Halloween Party • Oct 31, 2026',
-    targetDate: new Date('2026-10-31T16:00:00+05:30').getTime(),
+    liveBadge: '🎃 HALLOWEEN PARTY LIVE NOW!',
+    title: 'Coslabs Halloween Party • Oct 31 (4 PM – 6:30 PM)',
+    liveTitle: 'Coslabs Halloween Party • Doors Open (Until 6:30 PM)',
+    startDate: new Date('2026-10-31T16:00:00+05:30').getTime(),
+    endDate: new Date('2026-10-31T18:30:00+05:30').getTime(),
     url: 'https://greet.fydo.in/coslabs-halloween-party-2026',
     ariaLabel: 'Book Passes for Coslabs Halloween Party 2026',
     theme: 'halloween',
@@ -31,8 +42,11 @@ const EVENT_SCHEDULE: EventSchedule[] = [
   {
     id: 'ocd-2026',
     badge: 'COUNTDOWN TO OCD 2026 🔥',
-    title: 'Otaku Community Day • Nov 22, 2026',
-    targetDate: new Date('2026-11-22T12:00:00+05:30').getTime(),
+    liveBadge: '🔥 OTAKU DAY IS LIVE NOW!',
+    title: 'Otaku Community Day • Nov 22 (12 PM – 5 PM)',
+    liveTitle: 'Otaku Community Day • Festival Underway (Until 5 PM)',
+    startDate: new Date('2026-11-22T12:00:00+05:30').getTime(),
+    endDate: new Date('2026-11-22T17:00:00+05:30').getTime(),
     url: 'https://greet.fydo.in/otaku-community-day-2026',
     ariaLabel: 'Book Passes for Otaku Community Day 2026',
     theme: 'otaku',
@@ -41,6 +55,7 @@ const EVENT_SCHEDULE: EventSchedule[] = [
 
 interface CountdownState {
   activeEvent: EventSchedule | null;
+  isLive: boolean;
   days: number;
   hours: number;
   minutes: number;
@@ -48,67 +63,58 @@ interface CountdownState {
   isAllExpired: boolean;
 }
 
-export default function EventCountdown() {
-  const [state, setState] = useState<CountdownState>(() => {
-    const now = Date.now();
-    const current = EVENT_SCHEDULE.find((ev) => ev.targetDate > now);
-    if (!current) {
-      return { activeEvent: null, days: 0, hours: 0, minutes: 0, seconds: 0, isAllExpired: true };
-    }
-    const diff = current.targetDate - now;
+function calculateState(): CountdownState {
+  const now = Date.now();
+  const current = EVENT_SCHEDULE.find((ev) => now < ev.endDate);
+
+  if (!current) {
     return {
-      activeEvent: current,
-      days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-      minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-      seconds: Math.floor((diff % (1000 * 60)) / 1000),
-      isAllExpired: false,
+      activeEvent: null,
+      isLive: false,
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      isAllExpired: true,
     };
-  });
+  }
+
+  const isLive = now >= current.startDate && now < current.endDate;
+  const target = isLive ? current.endDate : current.startDate;
+  const diff = target - now;
+
+  return {
+    activeEvent: current,
+    isLive,
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+    seconds: Math.floor((diff % (1000 * 60)) / 1000),
+    isAllExpired: false,
+  };
+}
+
+export default function EventCountdown() {
+  const [state, setState] = useState<CountdownState>(calculateState);
 
   useEffect(() => {
-    const calculateCountdown = () => {
-      const now = Date.now();
-      const current = EVENT_SCHEDULE.find((ev) => ev.targetDate > now);
-
-      if (!current) {
-        setState({
-          activeEvent: null,
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-          isAllExpired: true,
-        });
-        return;
-      }
-
-      const diff = current.targetDate - now;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      setState({
-        activeEvent: current,
-        days,
-        hours,
-        minutes,
-        seconds,
-        isAllExpired: false,
-      });
+    const updateCountdown = () => {
+      setState(calculateState());
     };
 
-    calculateCountdown();
-    const interval = setInterval(calculateCountdown, 1000);
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
     return () => clearInterval(interval);
   }, []);
 
   if (state.isAllExpired || !state.activeEvent) return null;
 
-  const { activeEvent, days, hours, minutes, seconds } = state;
+  const { activeEvent, isLive, days, hours, minutes, seconds } = state;
   const isHalloween = activeEvent.theme === 'halloween';
   const pad = (n: number) => String(n).padStart(2, '0');
+
+  const currentBadge = isLive ? activeEvent.liveBadge : activeEvent.badge;
+  const currentTitle = isLive ? activeEvent.liveTitle : activeEvent.title;
 
   return (
     <a
@@ -145,7 +151,7 @@ export default function EventCountdown() {
                 isHalloween ? 'text-orange-400' : 'text-[#F3B334]'
               }`}
             >
-              {activeEvent.badge}
+              {currentBadge}
             </span>
             <span
               className={`inline-block w-1.5 h-1.5 rounded-full animate-ping ${
@@ -154,7 +160,7 @@ export default function EventCountdown() {
             />
           </div>
           <p className="text-xs text-gray-200 font-semibold group-hover:text-white transition-colors">
-            {activeEvent.title}
+            {currentTitle}
           </p>
         </div>
       </div>

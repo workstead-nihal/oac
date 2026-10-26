@@ -160,26 +160,11 @@ export const SOCIAL_LINKS: SocialLink[] = [
 
 // Official Links & Registrations: First two are flagship featured cards, followed by application forms
 export const LINK_ITEMS: LinkItem[] = [
-  // 1. Featured Flagship: Otaku Community Day 2026 Tickets
-  {
-    id: 'ocd-tickets-2026',
-    title: 'Otaku Community Day 2026 Tickets',
-    subtitle: 'Book your pass for the biggest anime gathering in Odisha. Cosplay, stalls, games & music!',
-    url: 'https://greet.fydo.in/otaku-community-day-2026',
-    badge: '🔥 TICKETS LIVE',
-    badgeColor: 'red',
-    thumbnailUrl: '/images/ocd-poster.png',
-    isFeatured: true,
-    highlightGlow: true,
-    actionText: 'Book Tickets',
-    iconName: 'Ticket',
-  },
-
-  // 2. Featured Special: Coslabs Halloween Party 2026
+  // 1. Featured Special: Coslabs Halloween Party 2026 (Oct 31, 2026 • 4 PM – 6:30 PM)
   {
     id: 'coslabs-halloween-2026',
     title: 'Coslabs Halloween Party 2026 - Book Tickets',
-    subtitle: 'Spooky cosplay contest, anime themes, treats, and music night with the anime fam!',
+    subtitle: 'Spooky cosplay contest, anime themes, treats, and music night with the anime fam! Oct 31 • 4 PM – 6:30 PM.',
     url: 'https://greet.fydo.in/coslabs-halloween-party-2026',
     badge: '🎃 HALLOWEEN SPECIAL',
     badgeColor: 'purple',
@@ -188,6 +173,21 @@ export const LINK_ITEMS: LinkItem[] = [
     highlightGlow: true,
     actionText: 'Get Passes',
     iconName: 'Sparkles',
+  },
+
+  // 2. Featured Flagship: Otaku Community Day 2026 Tickets (Nov 22, 2026 • 12 PM – 5 PM)
+  {
+    id: 'ocd-tickets-2026',
+    title: 'Otaku Community Day 2026 Tickets',
+    subtitle: 'Book your pass for the biggest anime gathering in Odisha. Cosplay, stalls, games & music! Nov 22 • 12 PM – 5 PM.',
+    url: 'https://greet.fydo.in/otaku-community-day-2026',
+    badge: '🔥 TICKETS LIVE',
+    badgeColor: 'red',
+    thumbnailUrl: '/images/ocd-poster.png',
+    isFeatured: true,
+    highlightGlow: true,
+    actionText: 'Book Tickets',
+    iconName: 'Ticket',
   },
 
   // 3. Esports Tournament: Mortal Kombat Showdown PS5
