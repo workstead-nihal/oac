@@ -12,7 +12,8 @@ const events = [
     location: '3rd Space, Near Esplanade, Rasulgarh',
     time: '12:00 pm to 5:00 pm IST',
     desc: "Introducing OTAKU COMMUNITY DAY 2026 — a day dedicated to anime, cosplay, games, creators, and bringing Odisha's POP culture community together! ❤️‍🔥\n\nWhether you're a casual anime watcher, a hardcore otaku, a cosplayer, a Gamer or just looking for people who share your interests. THIS IS YOUR PLACE.",
-    ticketNotice: 'Early Bird Tickets will be live soon',
+    ticketUrl: 'https://greet.fydo.in/otaku-community-day-2026/buy-page',
+    ticketLabel: 'Book Now',
     tag: 'Flagship Event',
     featured: true,
   },
@@ -132,9 +133,6 @@ export default function Events({ onJoinClick }: EventProps) {
                 <p className="text-sm font-medium text-gray-400">Currently inactive — updates coming later.</p>
               ) : (
                 <>
-                {event.ticketNotice && (
-                  <p className="text-sm font-medium text-[#F3B334]" role="status">{event.ticketNotice}</p>
-                )}
                 <div className="flex flex-wrap items-center gap-4">
                 {event.ticketUrl && (
                   <a
@@ -143,7 +141,7 @@ export default function Events({ onJoinClick }: EventProps) {
                     rel="noopener noreferrer"
                     className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[#D91515] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#F3B334] hover:text-[#0C0C0C] transition-colors"
                   >
-                    Book Tickets
+                    {event.ticketLabel || 'Book Tickets'}
                     <ArrowRight size={16} aria-hidden="true" />
                   </a>
                 )}

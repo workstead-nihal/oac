@@ -39,8 +39,9 @@ must remain reachable, and closing the menu must restore page scrolling.
 
 Event cards live in `src/components/Events.tsx`. OTAKU COMMUNITY DAY 2026 is
 scheduled for 22 November 2026, 12:00 pm–5:00 pm IST, at 3rd Space, Near
-Esplanade, Rasulgarh. Early bird tickets are coming soon; the card does not
-offer a booking action while sales are pending. Its Get Involved button still
+Esplanade, Rasulgarh. Its Book Now button opens
+https://greet.fydo.in/otaku-community-day-2026/buy-page in a new tab.
+Its Get Involved button still
 opens the existing community involvement form; this is separate from ticket sales.
 
 Sketch & Sip Meetup and Gaming Tournament Night have `inactive: true`.
@@ -50,4 +51,4 @@ confirms that the event is active again.
 
 Run `npm run dev`, then open the local URL printed in the terminal and choose
 Events. Check all four cards at phone and desktop widths. Confirm the flagship
-date, time, venue and ticket notice, and that both inactive cards have no buttons.
+date, time, venue and booking link, and that both inactive cards have no buttons.
