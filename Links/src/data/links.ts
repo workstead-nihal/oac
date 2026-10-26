@@ -158,7 +158,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
 ];
 
-// Order: featured events, tournaments and application forms. Social buttons remain in the header.
+// Official Links & Registrations: First two are flagship featured cards, followed by application forms
 export const LINK_ITEMS: LinkItem[] = [
   // 1. Featured Flagship: Otaku Community Day 2026 Tickets
   {
@@ -190,7 +190,7 @@ export const LINK_ITEMS: LinkItem[] = [
     iconName: 'Sparkles',
   },
 
-  // 3. Featured Esports Tournaments (Under Coslabs Halloween Party)
+  // 3. Esports Tournament: Mortal Kombat Showdown PS5
   {
     id: 'mortal-kombat-showdown-ps5',
     title: 'MORTAL KOMBAT SHOWDOWN — PS5 TOURNAMENT',
@@ -204,6 +204,8 @@ export const LINK_ITEMS: LinkItem[] = [
     actionText: 'Register Tournament',
     iconName: 'Gamepad2',
   },
+
+  // 4. Esports Tournament: Free Fire BR Championship
   {
     id: 'otakus-arena-free-fire-2026',
     title: 'OTAKUS ARENA × OAC — FREE FIRE BR CHAMPIONSHIP 2026',
@@ -218,7 +220,7 @@ export const LINK_ITEMS: LinkItem[] = [
     iconName: 'Trophy',
   },
 
-  // 4. Application Forms
+  // 5. Applications: Talent Hunt
   {
     id: 'ocd-talent-hunt',
     title: 'OTAKU COMMUNITY DAY TALENT HUNT',
@@ -232,6 +234,8 @@ export const LINK_ITEMS: LinkItem[] = [
     actionText: 'Apply Now',
     iconName: 'Mic',
   },
+
+  // 6. Applications: Vendors & Stalls
   {
     id: 'ocd-vendor-applications',
     title: 'OTAKU COMMUNITY DAY Vendor & Stall Applications',
@@ -245,6 +249,8 @@ export const LINK_ITEMS: LinkItem[] = [
     actionText: 'Register Stall',
     iconName: 'Store',
   },
+
+  // 7. Applications: OAC Crew Volunteer
   {
     id: 'oac-crew-volunteer',
     title: '🔥 OAC CREW 001 — VOLUNTEER APPLICATIONS OPEN!',
@@ -258,5 +264,4 @@ export const LINK_ITEMS: LinkItem[] = [
     actionText: 'Join Volunteer Crew',
     iconName: 'Users',
   },
-
 ];

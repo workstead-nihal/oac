@@ -155,7 +155,7 @@ export default function App() {
           aria-label="Community Passes and Links"
           className="w-full space-y-3.5 mt-2"
         >
-          {/* Live Event Countdown Ticker for OCD 2026 */}
+          {/* Live Event Countdown Ticker (Halloween 2026 -> OCD 2026 Auto-Sequence) */}
           <EventCountdown />
 
           {LINK_ITEMS.map((link, index) => (
