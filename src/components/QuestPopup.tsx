@@ -1,4 +1,3 @@
-// Purpose: offer a daily anime trivia quest and remember completion on this device.
 import { useState, useEffect, useMemo } from 'react';
 import { Scroll, X, CheckCircle, Sparkles, ExternalLink } from 'lucide-react';
 
@@ -131,33 +130,25 @@ const questDatabase = [
   { question: "In One Punch Man, what is Saitama's hero rank at the beginning of the series?", options: ["S-Class", "A-Class", "B-Class", "C-Class"], answer: "C-Class" }
 ];
 
-// Renders today's question and completion state; no inputs, returns the quest launcher and popup.
 export default function QuestPopup() {
   const [isOpen, setIsOpen] = useState(false);
   const [questState, setQuestState] = useState<'question' | 'wrong' | 'cleared'>('question');
   
-  // Controls the little floating bubble text
   const [showNotification, setShowNotification] = useState(true);
   const [isCompletedToday, setIsCompletedToday] = useState(false);
 
-  // Auto-hide the notification bubble after 15 seconds
   useEffect(() => {
     let hideTimer: ReturnType<typeof setTimeout>;
-    
     if (showNotification) {
-      // Set timer to hide the bubble after 15 seconds (15000 milliseconds)
       hideTimer = setTimeout(() => {
         setShowNotification(false);
       }, 15000);
     }
-    
     return () => clearTimeout(hideTimer);
-  }, [showNotification]); // Re-runs this effect whenever showNotification becomes true!
+  }, [showNotification]);
 
-  // Generate today's date string (e.g., "Mon Oct 12 2026")
   const todayStr = new Date().toDateString();
 
-  // Load state on mount
   useEffect(() => {
     let savedDate = null;
     try {
@@ -171,7 +162,6 @@ export default function QuestPopup() {
     }
   }, [todayStr]);
 
-  // Automatically select the question based on the current date
   const todayTrivia = useMemo(() => {
     const startDate = new Date('2024-01-01T00:00:00Z').getTime();
     const today = new Date().getTime();
@@ -180,11 +170,11 @@ export default function QuestPopup() {
     return questDatabase[questionIndex];
   }, []);
 
-  // Checks the selected answer and remembers success when browser storage is available.
   const handleAnswer = (selected: string) => {
     if (selected === todayTrivia.answer) {
       setQuestState('cleared');
       setIsCompletedToday(true);
+
       try {
         localStorage.setItem('oac_quest_date', todayStr);
       } catch {
@@ -192,16 +182,13 @@ export default function QuestPopup() {
       }
     } else {
       setQuestState('wrong');
-      // Reset back to question after showing 'wrong' for 1.5s
       setTimeout(() => setQuestState('question'), 1500);
     }
   };
 
   return (
     <>
-      {/* Floating Quest Button */}
       <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-2">
-        {/* Notification Bubble */}
         {showNotification && !isOpen && (
           <button
             type="button"
@@ -217,7 +204,7 @@ export default function QuestPopup() {
           aria-label="Open daily anime quest"
           onClick={() => {
             setIsOpen(true);
-            setShowNotification(false); // Hide the text bubble instantly when opened
+            setShowNotification(false);
           }}
           className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#0C0C0C]/80 backdrop-blur-md border-2 flex items-center justify-center transition-all duration-300 group hover:scale-110 shadow-lg ${isCompletedToday ? 'border-[#25D366] text-[#25D366] hover:bg-[#25D366] hover:text-[#0C0C0C]' : 'border-[#F3B334] text-[#F3B334] hover:bg-[#F3B334] hover:text-[#0C0C0C] shadow-[0_0_15px_rgba(243,179,52,0.3)]'}`}
         >
@@ -225,22 +212,18 @@ export default function QuestPopup() {
         </button>
       </div>
 
-      {/* Quest Modal Overlay */}
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center px-4 bg-black/70 backdrop-blur-sm animate-fade-in">
           
-          {/* Modal Container */}
           <div className="relative w-full max-w-[90vw] sm:max-w-md bg-[#0C0C0C]/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-slide-up">
             
-            {/* Top accent bar */}
             <div className={`h-1.5 w-full ${questState === 'cleared' ? 'bg-[#F3B334]' : 'bg-[#D91515]'} transition-colors duration-500`} />
             
-            {/* Close Button */}
             <button 
               aria-label="Close daily anime quest"
               onClick={() => {
                 setIsOpen(false);
-                setShowNotification(true); // Bring back the floating text (it will auto-hide again after 15s)
+                setShowNotification(true);
               }}
               className="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-white transition-colors p-2"
             >
@@ -249,7 +232,6 @@ export default function QuestPopup() {
 
             <div className="p-5 sm:p-8">
               
-              {/* --- STATE: QUESTION --- */}
               {questState === 'question' && (
                 <div className="animate-fade-in mt-2">
                   <div className="flex items-center gap-2 text-[#D91515] font-bold tracking-widest uppercase text-xs sm:text-sm mb-4">
@@ -273,16 +255,14 @@ export default function QuestPopup() {
                 </div>
               )}
 
-              {/* --- STATE: WRONG ANSWER --- */}
               {questState === 'wrong' && (
                 <div className="py-16 flex flex-col items-center justify-center text-center animate-shake">
-                  <span className="text-5xl mb-4">💦</span>
+                  <span className="text-5xl mb-4">👻</span>
                   <h3 className="text-xl font-bold text-[#D91515]">Wrong Answer, Senpai!</h3>
                   <p className="text-gray-400 mt-2 text-sm">Try again...</p>
                 </div>
               )}
 
-              {/* --- STATE: QUEST CLEARED (REWARD SCROLL) --- */}
               {questState === 'cleared' && (
                 <div className="py-6 sm:py-8 text-center animate-fade-in">
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#F3B334]/20 text-[#F3B334] mb-4 shadow-[0_0_20px_rgba(243,179,52,0.4)]">
@@ -291,11 +271,11 @@ export default function QuestPopup() {
                   <h3 className="text-xl sm:text-2xl font-display text-white mb-2">
                     {isCompletedToday ? "ALREADY CLEARED!" : "QUEST CLEARED!"}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#F3B334] mb-8 tracking-wider">Reward Scroll Unlocked</p>
+                  <p className="text-sm text-[#F3B334] mb-2 tracking-wider">Secret Code: <span className="font-bold text-white bg-white/10 px-2 py-1 rounded">SPOOKY5</span></p>
+                  <p className="text-xs sm:text-sm text-gray-400 mb-8">Use this code for a 5% discount on our Halloween event!</p>
                   
-                  {/* Single Reward Link */}
                   <a 
-                    href="https://shorturl.at/evfmd" 
+                    href="https://joinoac.in/links/" 
                     target="_blank" 
                     rel="noreferrer"
                     className="flex items-center justify-center gap-3 w-full px-5 py-4 rounded-xl bg-gradient-to-r from-[#D91515] to-[#F3B334] text-white font-bold text-base sm:text-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-[0_0_20px_rgba(217,21,21,0.4)] group"
