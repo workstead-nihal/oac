@@ -11,13 +11,12 @@ import ShareModal from './components/ShareModal';
 import Toast from './components/Toast';
 import { LINK_ITEMS } from './data/links';
 import { getAssetUrl } from './utils/assets';
-import { Eye, EyeOff, Radio, Sparkles } from 'lucide-react';
+import { Radio, Sparkles } from 'lucide-react';
 
 export default function App() {
   const [qrModalOpen, setQrModalOpen] = useState(false);
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [particlesEnabled, setParticlesEnabled] = useState(true);
   const [isHalloween, setIsHalloween] = useState(() => isHalloweenSeason());
   const [currentUrl, setCurrentUrl] = useState('https://joinoac.in/links/');
   const [redirectingTo, setRedirectingTo] = useState<string | null>(null);
@@ -103,11 +102,11 @@ export default function App() {
       <div className="fixed bottom-1/4 -right-20 w-96 h-96 bg-[#F3B334]/15 rounded-full blur-[120px] pointer-events-none animate-pulse-slow" />
       <div className="fixed -top-40 left-1/2 -translate-x-1/2 w-[650px] h-[380px] bg-gradient-to-b from-[#D91515]/20 via-[#F3B334]/15 to-transparent blur-[90px] pointer-events-none" />
 
-      {/* Floating Sakura / Embers Particle Background */}
-      {particlesEnabled && <ParticleBackground />}
+      {/* Floating Sakura / Embers Particle Background (Always Active) */}
+      <ParticleBackground />
 
-      {/* Floating Anime Bats & Hitodama Ghost Flames (Auto-expires after Halloween) */}
-      {particlesEnabled && isHalloween && <HalloweenEffect />}
+      {/* Floating Anime Bats & Hitodama Ghost Flames (Always Active during Halloween, auto-expires after) */}
+      {isHalloween && <HalloweenEffect />}
 
       {/* Top Floating Header & Live Status */}
       <header className="relative z-10 w-full max-w-xl mx-auto px-3.5 sm:px-6 pt-3 sm:pt-4 flex items-center justify-between">
@@ -129,30 +128,10 @@ export default function App() {
           </div>
         </a>
 
-        {/* Ambient VFX Toggle */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setParticlesEnabled(!particlesEnabled)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.09] border border-white/10 hover:border-white/20 text-xs text-gray-300 transition-all active:scale-95 shadow-sm min-h-[36px]"
-            title={particlesEnabled ? 'Turn off particle VFX' : 'Turn on particle VFX'}
-            aria-label="Toggle background particle animation"
-          >
-            {particlesEnabled ? (
-              <>
-                <Eye className="w-3.5 h-3.5 text-[#F3B334] animate-pulse" />
-                <span className="text-[11px] font-medium hidden xs:inline text-gray-200">
-                  {isHalloween ? '🎃 Spooky VFX: On' : 'VFX: On'}
-                </span>
-              </>
-            ) : (
-              <>
-                <EyeOff className="w-3.5 h-3.5 text-gray-500" />
-                <span className="text-[11px] font-medium hidden xs:inline text-gray-400">
-                  {isHalloween ? '🎃 Spooky VFX: Off' : 'VFX: Off'}
-                </span>
-              </>
-            )}
-          </button>
+        {/* Official Hub Live Badge */}
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-[10px] xs:text-[11px] font-mono text-gray-300 shadow-sm">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span>OFFICIAL HUB</span>
         </div>
       </header>
 
