@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import ParticleBackground from './components/ParticleBackground';
+import HalloweenEffect, { isHalloweenSeason } from './components/HalloweenEffect';
 import ProfileHero from './components/ProfileHero';
 import SocialLinks from './components/SocialLinks';
 import EventCountdown from './components/EventCountdown';
@@ -17,8 +18,20 @@ export default function App() {
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [particlesEnabled, setParticlesEnabled] = useState(true);
+  const [isHalloween, setIsHalloween] = useState(() => isHalloweenSeason());
   const [currentUrl, setCurrentUrl] = useState('https://joinoac.in/links/');
   const [redirectingTo, setRedirectingTo] = useState<string | null>(null);
+
+  // Monitor Halloween season expiration in real time
+  useEffect(() => {
+    if (!isHalloween) return;
+    const checkInterval = setInterval(() => {
+      if (!isHalloweenSeason()) {
+        setIsHalloween(false);
+      }
+    }, 30000);
+    return () => clearInterval(checkInterval);
+  }, [isHalloween]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -93,6 +106,9 @@ export default function App() {
       {/* Floating Sakura / Embers Particle Background */}
       {particlesEnabled && <ParticleBackground />}
 
+      {/* Floating Anime Bats & Hitodama Ghost Flames (Auto-expires after Halloween) */}
+      {particlesEnabled && isHalloween && <HalloweenEffect />}
+
       {/* Top Floating Header & Live Status */}
       <header className="relative z-10 w-full max-w-xl mx-auto px-3.5 sm:px-6 pt-3 sm:pt-4 flex items-center justify-between">
         <a
@@ -124,12 +140,16 @@ export default function App() {
             {particlesEnabled ? (
               <>
                 <Eye className="w-3.5 h-3.5 text-[#F3B334] animate-pulse" />
-                <span className="text-[11px] font-medium hidden xs:inline text-gray-200">VFX: On</span>
+                <span className="text-[11px] font-medium hidden xs:inline text-gray-200">
+                  {isHalloween ? '🎃 Spooky VFX: On' : 'VFX: On'}
+                </span>
               </>
             ) : (
               <>
                 <EyeOff className="w-3.5 h-3.5 text-gray-500" />
-                <span className="text-[11px] font-medium hidden xs:inline text-gray-400">VFX: Off</span>
+                <span className="text-[11px] font-medium hidden xs:inline text-gray-400">
+                  {isHalloween ? '🎃 Spooky VFX: Off' : 'VFX: Off'}
+                </span>
               </>
             )}
           </button>
