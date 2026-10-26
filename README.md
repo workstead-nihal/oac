@@ -4,6 +4,19 @@ React, TypeScript and Vite website for OAC.
 
 ## Development
 
+## Shareable links page
+
+`https://joinoac.in/links` opens a standalone community link hub, suitable for
+social bios and QR codes. GitHub Pages redirects the address to `/links/`.
+Edit destinations and labels in `public/links/index.html`; Vite copies it
+unchanged into `dist/links/index.html`. It needs no JavaScript to display links.
+The page is public to anyone with its URL, but is not linked in website menus
+or included in a sitemap, and requests search engines not to index it.
+After building, check that `dist/links/index.html` exists and test its tickets,
+Instagram, WhatsApp, Discord and homepage buttons on a phone.
+
+## Local setup
+
 1. Install Node.js 22 or later.
 2. Run `npm ci`.
 3. Copy `.env.example` to `.env` and fill in `VITE_FORMS_ENDPOINT` with your Cloudflare Worker `/submit` URL.
