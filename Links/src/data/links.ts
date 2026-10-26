@@ -158,7 +158,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
 ];
 
-// Order: 1. Featured Otaku -> 2. Featured Halloween -> 3. Forms -> 4. Socials (Website, Instagram, WhatsApp, Discord, YouTube)
+// Order: featured events, tournaments and application forms. Social buttons remain in the header.
 export const LINK_ITEMS: LinkItem[] = [
   // 1. Featured Flagship: Otaku Community Day 2026 Tickets
   {
@@ -259,60 +259,4 @@ export const LINK_ITEMS: LinkItem[] = [
     iconName: 'Users',
   },
 
-  // 4. Social & Community Links: Website -> Instagram -> WhatsApp -> Discord -> YouTube
-  {
-    id: 'oac-website',
-    title: 'Visit Official Website (joinoac.in)',
-    subtitle: 'Explore our full photo gallery, club history, partner collaborations, and upcoming roadmap.',
-    url: 'https://joinoac.in',
-    badge: '🌐 OFFICIAL HUB',
-    badgeColor: 'gold',
-    thumbnailUrl: '/images/oac-website.png',
-    actionText: 'Visit joinoac.in',
-    iconName: 'Globe',
-  },
-  {
-    id: 'oac-instagram',
-    title: 'Follow on Instagram (@odisha.anime.community)',
-    subtitle: 'Daily reels, event teasers, cosplay showcases, and community art spotlights.',
-    url: 'https://www.instagram.com/odisha.anime.community/',
-    badge: '📸 REELS & ART',
-    badgeColor: 'purple',
-    thumbnailUrl: '/images/oac-instagram.jpg',
-    actionText: 'Follow Instagram',
-    iconName: 'Instagram',
-  },
-  {
-    id: 'oac-whatsapp',
-    title: 'Join OAC WhatsApp Community',
-    subtitle: 'Daily chats, meetups, announcement alerts, and spontaneous anime discussions.',
-    url: 'https://chat.whatsapp.com/DtaCCgJyOGqIZu3P3n3J7r',
-    badge: '💬 ACTIVE CHATS',
-    badgeColor: 'emerald',
-    thumbnailUrl: '/images/oac-whatsapp.jpg',
-    actionText: 'Open WhatsApp',
-    iconName: 'MessageCircle',
-  },
-  {
-    id: 'oac-discord',
-    title: 'Join OAC Discord Server',
-    subtitle: 'Gaming sessions, watch parties, cosplay voice channels, and bot games with 5000+ members.',
-    url: 'https://discord.gg/VnUDQh4yJv',
-    badge: '🎮 VOICE & GAMING',
-    badgeColor: 'blue',
-    thumbnailUrl: '/images/oac-discord-tile.png',
-    actionText: 'Join Discord',
-    iconName: 'MessageSquare',
-  },
-  {
-    id: 'oac-youtube',
-    title: 'Subscribe on YouTube (@OdishaAnimeClub)',
-    subtitle: 'Event recaps, aftermovies, anime dance performances, and cosplay interviews.',
-    url: 'https://www.youtube.com/@OdishaAnimeClub',
-    badge: '📺 VIDEOS & RECAPS',
-    badgeColor: 'red',
-    thumbnailUrl: '/images/oac-youtube.jpg',
-    actionText: 'Subscribe YouTube',
-    iconName: 'Youtube',
-  },
 ];

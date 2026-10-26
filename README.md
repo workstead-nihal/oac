@@ -100,3 +100,5 @@ Commit the updated source and prebuilt output together, then run the root build.
 Copying source alone does not update the published hub. Root lint targets the
 main app; the imported app retains its own build checks. Test `/links/` directly,
 including images, ticket buttons, QR/share controls and refresh, before release.
+
+The Links hub keeps website/social access in its top controls only. The five duplicate bottom cards (website, Instagram, WhatsApp, Discord and YouTube) were removed from LINK_ITEMS; event tickets, tournaments and application cards remain. Rebuild Links before the root build when editing these entries.
