@@ -1,13 +1,10 @@
-// Purpose: introduce OAC and provide community actions without an overlapping scroll indicator.
 import { Calendar, MapPin, Sparkles } from 'lucide-react';
 
 interface HeroProps {
   onJoinClick: () => void;
 }
 
-// Renders the welcome section; onJoinClick opens membership and Discover More moves to About.
 export default function Hero({ onJoinClick }: HeroProps) {
-  // Moves to the About section without adding another decorative scroll control.
   const scrollToAbout = () => {
     document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -33,8 +30,9 @@ export default function Hero({ onJoinClick }: HeroProps) {
       <div className="absolute top-1/4 left-10 w-72 h-72 bg-[#D91515]/10 rounded-full blur-[100px] animate-pulse-slow" />
       <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-[#F3B334]/10 rounded-full blur-[120px] animate-pulse-slow" />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center pt-20 pb-10 md:pb-32">
+      {/* Main Content Container */}
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center pt-20 pb-12 md:pb-56">
+        
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#F3B334]/30 bg-[#F3B334]/5 backdrop-blur-sm mb-8 animate-fade-in">
           <Sparkles size={16} className="text-[#F3B334]" />
@@ -93,8 +91,66 @@ export default function Hero({ onJoinClick }: HeroProps) {
             <span className="text-xs text-gray-400">joinoac.in</span>
           </div>
         </div>
+
+        {/* MOBILE ONLY: Scroll Senpai - Shrunk to w-14 h-14 to save space */}
+        <div className="md:hidden flex justify-center mt-12 w-full animate-bounce z-20">
+          <button
+            onClick={scrollToAbout}
+            className="flex flex-col items-center gap-1 transition-colors cursor-pointer group"
+            aria-label="Scroll down"
+          >
+            <span className="text-[#F3B334] font-bold text-[10px] tracking-[0.2em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+              Scroll, Senpai!
+            </span>
+            <img 
+              src="/rem-scroll.png" 
+              alt="Scroll down" 
+              className="w-14 h-14 object-contain drop-shadow-[0_0_10px_rgba(243,179,52,0.3)] mr-12"
+            />
+          </button>
+        </div>
+
       </div>
 
+      {/* LEFT Rem */}
+      <div 
+        className="absolute top-[18%] md:top-1/2 -translate-y-1/2 left-6 sm:left-12 md:left-12 lg:left-24 z-20 flex flex-col items-center animate-bounce opacity-70 hover:opacity-100 transition-opacity" 
+        style={{ animationDelay: '0.2s' }}
+      >
+        <img 
+          src="/rem-scroll.png" 
+          alt="Rem Left" 
+          className="w-12 h-12 md:w-24 md:h-24 object-contain drop-shadow-[0_0_10px_rgba(243,179,52,0.3)]"
+        />
+      </div>
+
+      {/* RIGHT Rem */}
+      <div 
+        className="absolute top-[18%] md:top-1/2 -translate-y-1/2 right-6 sm:right-12 md:right-12 lg:right-24 z-20 flex flex-col items-center animate-bounce opacity-70 hover:opacity-100 transition-opacity" 
+        style={{ animationDelay: '0.4s' }}
+      >
+        <img 
+          src="/rem-scroll.png" 
+          alt="Rem Right" 
+          className="w-12 h-12 md:w-24 md:h-24 object-contain drop-shadow-[0_0_10px_rgba(243,179,52,0.3)] scale-x-[-1]"
+        />
+      </div>
+
+      {/* DESKTOP ONLY: Scroll Senpai */}
+      <button
+        onClick={scrollToAbout}
+        className="hidden md:flex absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex-col items-center gap-2 transition-colors animate-bounce cursor-pointer group"
+        aria-label="Scroll down"
+      >
+        <span className="text-[#F3B334] font-bold text-sm tracking-[0.2em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] group-hover:text-white transition-colors">
+          Scroll, Senpai!
+        </span>
+        <img 
+          src="/rem-scroll.png" 
+          alt="Scroll down" 
+          className="w-28 h-28 object-contain drop-shadow-[0_0_10px_rgba(243,179,52,0.3)] group-hover:drop-shadow-[0_0_15px_rgba(243,179,52,0.6)] transition-all mr-12"
+        />
+      </button>
     </section>
   );
-}
+} 
