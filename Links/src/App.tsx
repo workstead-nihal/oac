@@ -17,7 +17,7 @@ export default function App() {
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [particlesEnabled, setParticlesEnabled] = useState(true);
-  const [currentUrl, setCurrentUrl] = useState('https://joinoac.in');
+  const [currentUrl, setCurrentUrl] = useState('https://joinoac.in/links/');
   const [redirectingTo, setRedirectingTo] = useState<string | null>(null);
 
   useEffect(() => {
