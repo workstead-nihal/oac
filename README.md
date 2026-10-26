@@ -102,3 +102,11 @@ main app; the imported app retains its own build checks. Test `/links/` directly
 including images, ticket buttons, QR/share controls and refresh, before release.
 
 The Links hub keeps website/social access in its top controls only. The five duplicate bottom cards (website, Instagram, WhatsApp, Discord and YouTube) were removed from LINK_ITEMS; event tickets, tournaments and application cards remain. Rebuild Links before the root build when editing these entries.
+
+The deployment script generates a release-specific service worker for `/links/`.
+It requests fresh navigation HTML, retires only older `oac-links-` caches and
+refreshes existing hub windows once after an update. Other website caches are
+not deleted. This replaces the upstream worker's fixed cache version, which
+could retain the original hub for offline fallback. Offline fallback now uses
+the current release only. After publishing, check both a fresh tab and a tab
+that previously loaded the old hub; the seven remaining cards should match.
