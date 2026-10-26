@@ -41,7 +41,8 @@ const galleryItems: GalleryItem[] = Object.entries(images).map(([path, image]) =
 });
 
 type FilterType = 'All' | 'Cosplay' | 'Art' | 'Events';
-export default function Gallery() {
+// Displays member creativity; onJoinClick opens the community application menu.
+export default function Gallery({ onJoinClick }: { onJoinClick: () => void }) {
   const [filter, setFilter] = useState<FilterType>('All');
   const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
 
@@ -131,7 +132,9 @@ export default function Gallery() {
         <div className="mt-12 text-center">
           <p className="text-gray-500 text-sm">
             Want your work featured here?{' '}
-            <span className="text-[#F3B334] font-medium">Join as a creator and collaborate with OAC.</span>
+            <button onClick={onJoinClick} className="min-h-[44px] text-[#F3B334] font-medium hover:underline">
+              Join as a creator and collaborate with OAC.
+            </button>
           </p>
         </div>
       </div>

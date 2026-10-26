@@ -25,6 +25,17 @@ Run `npm run preview` to preview the production build locally.
 
 ## Upcoming event updates
 
+## Daily quest and PR integration
+
+The daily trivia launcher is implemented in `src/components/QuestPopup.tsx`.
+It remembers completion in this browser's local storage, and remains usable
+when storage is blocked. Gallery's creator invitation opens the existing
+application menu. During PR #1 conflict resolution, the current event details,
+Fydo ticket links, opaque mobile menu and removed hero scroll indicator were
+preserved. The PR's obsolete event copy and character scroll artwork were not
+restored. No dependencies were added. Test the quest answer and close buttons,
+reload after completing it, and check the gallery invitation and mobile menu.
+
 Halloween Party is on 31 October 2026, 4:00 PM–6:30 PM IST, at The Space,
 Patia. Its Book Tickets button uses the event's `ticketUrl` and opens the Fydo
 booking page in a new tab. Update that URL in `src/components/Events.tsx` when

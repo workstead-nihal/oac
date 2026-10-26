@@ -6,6 +6,7 @@ import Gallery from '@/components/Gallery';
 import Events from '@/components/Events';
 import Footer from '@/components/Footer';
 import JoinModal from '@/components/JoinModal';
+import QuestPopup from '@/components/QuestPopup';
 
 export default function App() {
   const [joinOpen, setJoinOpen] = useState(false);
@@ -16,11 +17,15 @@ export default function App() {
       <main>
         <Hero onJoinClick={() => setJoinOpen(true)} />
         <About />
-        <Gallery />
+        {/* Added the onJoinClick prop here so the modal opens! */}
+        <Gallery onJoinClick={() => setJoinOpen(true)} />
         <Events onJoinClick={() => setJoinOpen(true)} />
       </main>
       <Footer onJoinClick={() => setJoinOpen(true)} />
       <JoinModal isOpen={joinOpen} onClose={() => setJoinOpen(false)} />
+      
+      {/* Floating Quest Pop-up */}
+      <QuestPopup />
     </div>
   );
 }
