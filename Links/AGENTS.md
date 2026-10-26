@@ -28,4 +28,7 @@ This repository is governed by the rules defined in [llms.txt](./llms.txt). All 
 6. **Mandatory Verification**:
    - After any change, run `npm run build`. The build must exit with status code 0.
 
+7. **Primary Workspace & Update Precedence**:
+   - `oac/Links` is the PRIMARY source of truth. All future updates must be made in `oac/Links` first, verified with `node scripts/publish-links.mjs`, and then mirrored to `OAC-Linktree`.
+
 For full schemas, badge color standards, warp routing, and featured card options, read [llms.txt](./llms.txt).
