@@ -1,0 +1,10 @@
+# Windsurf Cascade Rules — OAC Link Hub
+# Canonical reference: /llms.txt
+
+- Scope: Only edit `src/data/links.ts` and image assets in `public/images/`.
+- UI Lock: Do NOT edit layout, styling, animations, or components in `src/components/`, `src/App.tsx`, `index.css`, or `tailwind.config.js`.
+- White-Label UI: Never inject external developer or studio credits into the visible UI or footer. UI footer must only show: "Made with ❤️ by Odisha Anime Community" and "© 2020–2026 Odisha Anime Community. All rights reserved." Studio credits (Crystal Studio Labs) stay strictly in repo files (LICENSE, README.md, llms.txt).
+- Security: Outbound URLs must use `https://`, `http://`, or `mailto:`.
+- Verification: Always run `npm run build` after editing.
+
+Read /llms.txt for complete documentation and LinkItem schema.

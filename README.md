@@ -8,12 +8,15 @@ React, TypeScript and Vite website for OAC.
 
 `https://joinoac.in/links` opens a standalone community link hub, suitable for
 social bios and QR codes. GitHub Pages redirects the address to `/links/`.
-Edit destinations and labels in `public/links/index.html`; Vite copies it
-unchanged into `dist/links/index.html`. It needs no JavaScript to display links.
+The imported `Links/` application replaces the original simple HTML page.
+See Imported Link Hub below for its source, prebuilt output and update steps.
 The page is public to anyone with its URL, but is not linked in website menus
 or included in a sitemap, and requests search engines not to index it.
 After building, check that `dist/links/index.html` exists and test its tickets,
 Instagram, WhatsApp, Discord and homepage buttons on a phone.
+Use `npm run build` followed by `npm run preview`, then open `/links/` on
+the printed preview address; the main development server does not build this
+independent application automatically.
 
 ## Local setup
 
@@ -76,3 +79,24 @@ confirms that the event is active again.
 Run `npm run dev`, then open the local URL printed in the terminal and choose
 Events. Check all four cards at phone and desktop widths. Confirm the flagship
 date, time, venue and booking link, and that both inactive cards have no buttons.
+
+## Imported Link Hub
+
+`Links/` is a source copy of https://github.com/Crystal-Studio-Labs/OAC-Linktree
+at commit `6e73935414509b835df39837f66ff9e786be3f7a`. Its original license,
+source, governance documents, assets and attribution are retained. The imported
+app stays separate from the main OAC React application; no dependency was added.
+
+The root build runs `scripts/publish-links.mjs` after Vite. It copies the upstream
+prebuilt `Links/docs/` site to `dist/links/`, verifies local HTML assets, rewrites
+hosting metadata to `https://joinoac.in/links/`, and adds noindex. This replaces
+the previous simple link hub. Website navigation does not link to this page.
+The deployed hub sitemap is omitted. The main site and its assets stay separate.
+
+To change the hub, edit its `Links/src/data/links.ts` or other approved source
+following its own instructions, then rebuild the standalone app in `Links/`
+using its locked dependencies and `npm run build` to refresh `Links/docs/`.
+Commit the updated source and prebuilt output together, then run the root build.
+Copying source alone does not update the published hub. Root lint targets the
+main app; the imported app retains its own build checks. Test `/links/` directly,
+including images, ticket buttons, QR/share controls and refresh, before release.

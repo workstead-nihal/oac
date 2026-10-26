@@ -1,0 +1,23 @@
+# CURSOR RULES — OAC LINK HUB
+# Full Specification: /llms.txt
+
+# 1. SCOPE BOUNDARIES
+- You are working on the Odisha Anime Community (OAC) Official Link Hub.
+- When instructed to add, remove, or modify links, ONLY edit `src/data/links.ts` and optionally add images to `public/images/`.
+- DO NOT edit or redesign UI components (`App.tsx`, `LinkCard.tsx`, `ParticleBackground.tsx`), CSS (`index.css`), or Tailwind configurations (`tailwind.config.js`).
+
+# 2. WHITE-LABEL FRONT-END UI POLICY
+- The rendered website UI must NEVER display external agency or studio credits.
+- Footer must strictly display community-first text only:
+  - "Made with ❤️ by Odisha Anime Community"
+  - "© 2020–2026 Odisha Anime Community. All rights reserved."
+- Studio attribution (Crystal Studio Labs) is strictly restricted to repo metadata/source files (LICENSE, README.md, llms.txt, etc.).
+
+# 3. SECURITY & SAFETY
+- Outbound URLs in `src/data/links.ts` must use `https://`, `http://`, or `mailto:`. Never use `javascript:` or `data:`.
+- This is a standalone repository. Do not import or touch external projects.
+
+# 4. VERIFICATION
+- Always execute `npm run build` after making modifications to verify zero TypeScript errors.
+
+Read /llms.txt for full schema and configuration standards.

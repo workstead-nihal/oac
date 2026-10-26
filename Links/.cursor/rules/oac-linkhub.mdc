@@ -1,0 +1,15 @@
+---
+description: Rules and boundaries for OAC Link Hub modifications
+globs: *
+alwaysApply: true
+---
+
+# OAC Link Hub — Agent Guidelines
+
+Refer to `llms.txt` for canonical directives.
+
+- **Permitted Scope**: Only modify `src/data/links.ts` and `public/images/`.
+- **UI Lock**: Do not modify styling, animations, or components in `src/components/` or `src/App.tsx`.
+- **White-Label Policy**: Do not add studio credits to the web UI. Footer stays community-only ("Made with ❤️ by Odisha Anime Community").
+- **Security**: Outbound URLs must use `https://`, `http://`, or `mailto:`.
+- **Validation**: Always verify with `npm run build`.
