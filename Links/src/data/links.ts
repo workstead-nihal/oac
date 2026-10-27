@@ -264,4 +264,16 @@ export const LINK_ITEMS: LinkItem[] = [
     actionText: 'Join Volunteer Crew',
     iconName: 'Users',
   },
+  {
+    id: 'art-competition',
+    title: 'Art Competition',
+    subtitle: 'Show your creativity. Open the form for competition details and registration.',
+    url: 'https://forms.gle/Myb9MV4YbDCX2Jps7',
+    badge: 'ART COMPETITION',
+    badgeColor: 'purple',
+    isFeatured: false,
+    highlightGlow: false,
+    actionText: 'Register Now',
+    iconName: 'Sparkles',
+  },
 ];
