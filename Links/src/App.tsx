@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import ParticleBackground from './components/ParticleBackground';
-import HalloweenEffect, { isHalloweenSeason } from './components/HalloweenEffect';
 import ProfileHero from './components/ProfileHero';
 import SocialLinks from './components/SocialLinks';
 import EventCountdown from './components/EventCountdown';
@@ -17,20 +16,8 @@ export default function App() {
   const [qrModalOpen, setQrModalOpen] = useState(false);
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [isHalloween, setIsHalloween] = useState(() => isHalloweenSeason());
   const [currentUrl, setCurrentUrl] = useState('https://joinoac.in/links/');
   const [redirectingTo, setRedirectingTo] = useState<string | null>(null);
-
-  // Monitor Halloween season expiration in real time
-  useEffect(() => {
-    if (!isHalloween) return;
-    const checkInterval = setInterval(() => {
-      if (!isHalloweenSeason()) {
-        setIsHalloween(false);
-      }
-    }, 30000);
-    return () => clearInterval(checkInterval);
-  }, [isHalloween]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -105,9 +92,6 @@ export default function App() {
       {/* Floating Sakura / Embers Particle Background (Always Active) */}
       <ParticleBackground />
 
-      {/* Floating Anime Bats & Hitodama Ghost Flames (Always Active during Halloween, auto-expires after) */}
-      {isHalloween && <HalloweenEffect />}
-
       {/* Top Floating Header & Live Status */}
       <header className="relative z-10 w-full max-w-xl mx-auto px-3.5 sm:px-6 pt-3 sm:pt-4 flex items-center justify-between">
         <a
@@ -154,7 +138,7 @@ export default function App() {
           aria-label="Community Passes and Links"
           className="w-full space-y-3.5 mt-2"
         >
-          {/* Live Event Countdown Ticker (Halloween 2026 -> OCD 2026 Auto-Sequence) */}
+          {/* Live Event Countdown Ticker (Otaku Community Day 2026) */}
           <EventCountdown />
 
           {LINK_ITEMS.map((link, index) => (

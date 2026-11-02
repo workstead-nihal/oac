@@ -158,24 +158,9 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
 ];
 
-// Official Links & Registrations: First two are flagship featured cards, followed by application forms
+// Official Links & Registrations: Flagship featured tickets at top, followed by tournaments and forms
 export const LINK_ITEMS: LinkItem[] = [
-  // 1. Featured Special: Coslabs Halloween Party 2026 (Oct 31, 2026 • 4 PM – 6:30 PM)
-  {
-    id: 'coslabs-halloween-2026',
-    title: 'Coslabs Halloween Party 2026 - Book Tickets',
-    subtitle: 'Spooky cosplay contest, anime themes, treats, and music night with the anime fam! Oct 31 • 4 PM – 6:30 PM.',
-    url: 'https://greet.fydo.in/coslabs-halloween-party-2026',
-    badge: '🎃 HALLOWEEN SPECIAL',
-    badgeColor: 'purple',
-    thumbnailUrl: '/images/coslabs-halloween.png',
-    isFeatured: true,
-    highlightGlow: true,
-    actionText: 'Get Passes',
-    iconName: 'Sparkles',
-  },
-
-  // 2. Featured Flagship: Otaku Community Day 2026 Tickets (Nov 22, 2026 • 12 PM – 5 PM)
+  // 1. Featured Flagship: Otaku Community Day 2026 Tickets (Nov 22, 2026 • 12 PM – 5 PM)
   {
     id: 'ocd-tickets-2026',
     title: 'Otaku Community Day 2026 Tickets',
@@ -190,7 +175,7 @@ export const LINK_ITEMS: LinkItem[] = [
     iconName: 'Ticket',
   },
 
-  // 3. Esports Tournament: Mortal Kombat Showdown PS5
+  // 2. Esports Tournament: Mortal Kombat Showdown PS5
   {
     id: 'mortal-kombat-showdown-ps5',
     title: 'MORTAL KOMBAT SHOWDOWN — PS5 TOURNAMENT',
@@ -205,7 +190,7 @@ export const LINK_ITEMS: LinkItem[] = [
     iconName: 'Gamepad2',
   },
 
-  // 4. Esports Tournament: Free Fire BR Championship
+  // 3. Esports Tournament: Free Fire BR Championship
   {
     id: 'otakus-arena-free-fire-2026',
     title: 'OTAKUS ARENA × OAC — FREE FIRE BR CHAMPIONSHIP 2026',
@@ -220,7 +205,7 @@ export const LINK_ITEMS: LinkItem[] = [
     iconName: 'Trophy',
   },
 
-  // 5. Applications: Talent Hunt
+  // 4. Applications: Talent Hunt
   {
     id: 'ocd-talent-hunt',
     title: 'OTAKU COMMUNITY DAY TALENT HUNT',
@@ -235,7 +220,7 @@ export const LINK_ITEMS: LinkItem[] = [
     iconName: 'Mic',
   },
 
-  // 6. Applications: Vendors & Stalls
+  // 5. Applications: Vendors & Stalls
   {
     id: 'ocd-vendor-applications',
     title: 'OTAKU COMMUNITY DAY Vendor & Stall Applications',
@@ -250,7 +235,7 @@ export const LINK_ITEMS: LinkItem[] = [
     iconName: 'Store',
   },
 
-  // 7. Applications: OAC Crew Volunteer
+  // 6. Applications: OAC Crew Volunteer
   {
     id: 'oac-crew-volunteer',
     title: '🔥 OAC CREW 001 — VOLUNTEER APPLICATIONS OPEN!',
@@ -264,6 +249,8 @@ export const LINK_ITEMS: LinkItem[] = [
     actionText: 'Join Volunteer Crew',
     iconName: 'Users',
   },
+
+  // 7. Applications: Art Competition
   {
     id: 'art-competition',
     title: 'Art Competition',
