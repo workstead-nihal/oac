@@ -263,4 +263,16 @@ export const LINK_ITEMS: LinkItem[] = [
     actionText: 'Register Now',
     iconName: 'Sparkles',
   },
+  {
+    id: 'cosplay-competition',
+    title: 'Cosplay Competition Registration',
+    subtitle: 'Ready to show your cosplay? Open the form for competition details and registration.',
+    url: 'https://forms.gle/gFSDJYYVemQnKapj7',
+    badge: 'COSPLAY COMPETITION',
+    badgeColor: 'gold',
+    isFeatured: false,
+    highlightGlow: false,
+    actionText: 'Register Now',
+    iconName: 'Sparkles',
+  },
 ];
