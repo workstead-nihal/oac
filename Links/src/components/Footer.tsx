@@ -1,4 +1,4 @@
-import { Heart, ArrowUp, Mail, MapPin } from 'lucide-react';
+import { Heart, Coffee, ArrowUp, Mail, MapPin } from 'lucide-react';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -24,14 +24,26 @@ export default function Footer() {
           </span>
         </div>
 
-        {/* Community line */}
-        <p className="flex items-center justify-center gap-1.5 text-gray-400 text-xs">
+        {/* Community & Engineering Attribution Line */}
+        <p className="flex flex-wrap items-center justify-center gap-1.5 text-gray-400 text-[11px] xs:text-xs">
           <span>Made with</span>
-          <Heart className="w-3.5 h-3.5 text-[#D91515] fill-current" />
-          <span>by Odisha Anime Community</span>
+          <Heart className="w-3.5 h-3.5 text-[#D91515] fill-current inline-block" />
+          <span>and</span>
+          <Coffee className="w-3.5 h-3.5 text-[#F3B334] inline-block" />
+          <span>by</span>
+          <span className="text-gray-300 font-medium">Odisha Anime Community</span>
+          <span>and</span>
+          <a
+            href="https://github.com/Crystal-Studio-Labs"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-300 font-medium hover:text-[#F3B334] transition-colors underline decoration-white/20 hover:decoration-[#F3B334]"
+          >
+            Crystal Studio Labs
+          </a>
         </p>
 
-        {/* Clean Copyright without studio credits */}
+        {/* Clean Copyright */}
         <p className="text-[10px] xs:text-[11px] text-gray-600">
           © 2020–2026 Odisha Anime Community. All rights reserved.
         </p>
