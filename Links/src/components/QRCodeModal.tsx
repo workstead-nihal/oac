@@ -232,14 +232,26 @@ async function generateBrandedQRCodeBlob(
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    // Clip & draw logo
+    // Clip & draw logo with strictly preserved natural aspect ratio (object-fit: contain)
     ctx.save();
     ctx.beginPath();
     ctx.arc(centerBadgeX, centerBadgeY, badgeRadius - 4, 0, Math.PI * 2);
     ctx.clip();
-    const logoW = 76;
-    const logoH = 76;
-    ctx.drawImage(logoImg, centerBadgeX - logoW / 2, centerBadgeY - logoH / 2, logoW, logoH);
+
+    const imgW = logoImg.naturalWidth || logoImg.width || 1;
+    const imgH = logoImg.naturalHeight || logoImg.height || 1;
+    const maxBound = (badgeRadius - 6) * 2; // 88px maximum bounding dimension
+    const scale = Math.min(maxBound / imgW, maxBound / imgH);
+    const drawW = Math.round(imgW * scale);
+    const drawH = Math.round(imgH * scale);
+
+    ctx.drawImage(
+      logoImg,
+      centerBadgeX - drawW / 2,
+      centerBadgeY - drawH / 2,
+      drawW,
+      drawH
+    );
     ctx.restore();
   }
 
