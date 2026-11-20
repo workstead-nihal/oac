@@ -16,18 +16,18 @@ interface EventSchedule {
 /**
  * Chronological event schedule:
  * Otaku Community Day 2026:
- * - Starts: Nov 22, 2026 at 12:00 PM IST (12:00)
- * - Ends:   Nov 22, 2026 at 5:00 PM IST (17:00)
+ * - Starts: Nov 29, 2026 at 12:00 PM IST (12:00)
+ * - Ends:   Nov 29, 2026 at 5:00 PM IST (17:00)
  */
 const EVENT_SCHEDULE: EventSchedule[] = [
   {
     id: 'ocd-2026',
     badge: 'COUNTDOWN TO OCD 2026 🔥',
     liveBadge: '🔥 OTAKU DAY IS LIVE NOW!',
-    title: 'Otaku Community Day • Nov 22 (12 PM – 5 PM)',
-    liveTitle: 'Otaku Community Day • Festival Underway (Until 5 PM)',
-    startDate: new Date('2026-11-22T12:00:00+05:30').getTime(),
-    endDate: new Date('2026-11-22T17:00:00+05:30').getTime(),
+    title: 'Otaku Community Day',
+    liveTitle: 'Otaku Community Day • Festival Underway',
+    startDate: new Date('2026-11-29T12:00:00+05:30').getTime(),
+    endDate: new Date('2026-11-29T17:00:00+05:30').getTime(),
     url: 'https://greet.fydo.in/otaku-community-day-2026',
     ariaLabel: 'Book Passes for Otaku Community Day 2026',
   },

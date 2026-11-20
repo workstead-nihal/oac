@@ -60,7 +60,7 @@ The **Odisha Anime Community (OAC) Link Hub** is a standalone, ultra-responsive 
 
 The single-page stream in [`src/data/links.ts`](src/data/links.ts) is arranged in priority order:
 
-1. **🎟️ Otaku Community Day 2026 Tickets** (`isFeatured: true`) — Flagship anime convention pass at 3rd Space, Rasulgarh, Bhubaneswar (Nov 22, 2026).
+1. **🎟️ Otaku Community Day 2026 Tickets** (`isFeatured: true`) — Flagship anime convention pass at 3rd Space, Rasulgarh, Bhubaneswar (Nov 29, 2026).
 2. **🎃 Coslabs Halloween Party 2026** (`isFeatured: true`) — Spooky cosplay party, games, cake, and anime DJ night passes.
 3. **🌟 OTAKU COMMUNITY DAY TALENT HUNT** — Auditions for singing, dancing, skits, instruments, and stage acts.
 4. **🛍️ OTAKU COMMUNITY DAY Vendor & Stall Applications** — Merchandise, art prints, manga, and food stall registrations.
