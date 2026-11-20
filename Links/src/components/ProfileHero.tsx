@@ -89,12 +89,8 @@ export default function ProfileHero({ onOpenQR, onOpenShare, onShowToast }: Prof
 
       {/* Top Status Tag with Anime Pulse */}
       <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-xs text-gray-200 mb-6 backdrop-blur-md shadow-lg group hover:border-[#F3B334]/40 transition-colors">
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D91515] opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F3B334]" />
-        </span>
-        <span className="font-semibold tracking-wider text-[11px] text-gray-200">
-          OFFICIAL HUB
+        <span className="font-semibold tracking-wider text-[10px] xs:text-[11px] text-gray-200">
+          🎌 ODISHA'S LARGEST ANIME FAMILY
         </span>
         <Sparkles className="w-3.5 h-3.5 text-[#F3B334] group-hover:rotate-12 transition-transform" />
       </div>
