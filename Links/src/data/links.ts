@@ -160,11 +160,11 @@ export const SOCIAL_LINKS: SocialLink[] = [
 
 // Official Links & Registrations: Flagship featured tickets at top, followed by tournaments and forms
 export const LINK_ITEMS: LinkItem[] = [
-  // 1. Featured Flagship: Otaku Community Day 2026 Tickets (Nov 22, 2026 • 12 PM – 5 PM)
+  // 1. Featured Flagship: Otaku Community Day 2026 Tickets (Nov 29, 2026 • 12 PM – 5 PM)
   {
     id: 'ocd-tickets-2026',
     title: 'Otaku Community Day 2026 Tickets',
-    subtitle: 'Book your pass for the biggest anime gathering in Odisha. Cosplay, stalls, games & music! Nov 22 • 12 PM – 5 PM.',
+    subtitle: 'Book your pass for the biggest anime gathering in Odisha. Cosplay, stalls, games & music! Nov 29 • 12 PM – 5 PM.',
     url: 'https://greet.fydo.in/otaku-community-day-2026',
     badge: '🔥 TICKETS LIVE',
     badgeColor: 'red',
@@ -205,7 +205,22 @@ export const LINK_ITEMS: LinkItem[] = [
     iconName: 'Trophy',
   },
 
-  // 4. Applications: Talent Hunt
+  // 4. Applications: Art Competition
+  {
+    id: 'art-competition',
+    title: 'Art Competition',
+    subtitle: 'Show your creativity. Open the form for competition details and registration.',
+    url: 'https://forms.gle/Myb9MV4YbDCX2Jps7',
+    badge: 'ART COMPETITION',
+    badgeColor: 'purple',
+    thumbnailUrl: '/images/art-competition.jpg',
+    isFeatured: false,
+    highlightGlow: false,
+    actionText: 'Register Now',
+    iconName: 'Sparkles',
+  },
+
+  // 5. Applications: Talent Hunt
   {
     id: 'ocd-talent-hunt',
     title: 'OTAKU COMMUNITY DAY TALENT HUNT',
@@ -220,7 +235,7 @@ export const LINK_ITEMS: LinkItem[] = [
     iconName: 'Mic',
   },
 
-  // 5. Applications: Vendors & Stalls
+  // 6. Applications: Vendors & Stalls
   {
     id: 'ocd-vendor-applications',
     title: 'OTAKU COMMUNITY DAY Vendor & Stall Applications',
@@ -235,7 +250,7 @@ export const LINK_ITEMS: LinkItem[] = [
     iconName: 'Store',
   },
 
-  // 6. Applications: OAC Crew Volunteer
+  // 7. Applications: OAC Crew Volunteer
   {
     id: 'oac-crew-volunteer',
     title: '🔥 OAC CREW 001 — VOLUNTEER APPLICATIONS OPEN!',
@@ -249,20 +264,7 @@ export const LINK_ITEMS: LinkItem[] = [
     actionText: 'Join Volunteer Crew',
     iconName: 'Users',
   },
-
-  // 7. Applications: Art Competition
-  {
-    id: 'art-competition',
-    title: 'Art Competition',
-    subtitle: 'Show your creativity. Open the form for competition details and registration.',
-    url: 'https://forms.gle/Myb9MV4YbDCX2Jps7',
-    badge: 'ART COMPETITION',
-    badgeColor: 'purple',
-    isFeatured: false,
-    highlightGlow: false,
-    actionText: 'Register Now',
-    iconName: 'Sparkles',
-  },
+  // 8. Applications: Cosplay Competition
   {
     id: 'cosplay-competition',
     title: 'Cosplay Competition Registration',
@@ -270,6 +272,7 @@ export const LINK_ITEMS: LinkItem[] = [
     url: 'https://forms.gle/gFSDJYYVemQnKapj7',
     badge: 'COSPLAY COMPETITION',
     badgeColor: 'gold',
+    thumbnailUrl: '/images/cosplay-competition.jpg',
     isFeatured: false,
     highlightGlow: false,
     actionText: 'Register Now',
