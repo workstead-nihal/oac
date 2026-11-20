@@ -208,7 +208,7 @@ export const LINK_ITEMS: LinkItem[] = [
   // 4. Applications: Art Competition
   {
     id: 'art-competition',
-    title: 'Art Competition',
+    title: 'ART COMPETITION REGISTRATION',
     subtitle: 'Show your creativity. Open the form for competition details and registration.',
     url: 'https://forms.gle/Myb9MV4YbDCX2Jps7',
     badge: 'ART COMPETITION',
@@ -220,7 +220,22 @@ export const LINK_ITEMS: LinkItem[] = [
     iconName: 'Sparkles',
   },
 
-  // 5. Applications: Talent Hunt
+  // 5. Applications: Cosplay Competition
+  {
+    id: 'cosplay-competition',
+    title: 'COSPLAY COMPETITION REGISTRATION',
+    subtitle: 'Ready to show your cosplay? Open the form for competition details and registration.',
+    url: 'https://forms.gle/gFSDJYYVemQnKapj7',
+    badge: 'COSPLAY COMPETITION',
+    badgeColor: 'gold',
+    thumbnailUrl: '/images/cosplay-competition.jpg',
+    isFeatured: false,
+    highlightGlow: false,
+    actionText: 'Register Now',
+    iconName: 'Sparkles',
+  },
+
+  // 6. Applications: Talent Hunt
   {
     id: 'ocd-talent-hunt',
     title: 'OTAKU COMMUNITY DAY TALENT HUNT',
@@ -235,7 +250,7 @@ export const LINK_ITEMS: LinkItem[] = [
     iconName: 'Mic',
   },
 
-  // 6. Applications: Vendors & Stalls
+  // 7. Applications: Vendors & Stalls
   {
     id: 'ocd-vendor-applications',
     title: 'OTAKU COMMUNITY DAY Vendor & Stall Applications',
@@ -250,7 +265,7 @@ export const LINK_ITEMS: LinkItem[] = [
     iconName: 'Store',
   },
 
-  // 7. Applications: OAC Crew Volunteer
+  // 8. Applications: OAC Crew Volunteer
   {
     id: 'oac-crew-volunteer',
     title: '🔥 OAC CREW 001 — VOLUNTEER APPLICATIONS OPEN!',
@@ -263,19 +278,5 @@ export const LINK_ITEMS: LinkItem[] = [
     highlightGlow: true,
     actionText: 'Join Volunteer Crew',
     iconName: 'Users',
-  },
-  // 8. Applications: Cosplay Competition
-  {
-    id: 'cosplay-competition',
-    title: 'Cosplay Competition Registration',
-    subtitle: 'Ready to show your cosplay? Open the form for competition details and registration.',
-    url: 'https://forms.gle/gFSDJYYVemQnKapj7',
-    badge: 'COSPLAY COMPETITION',
-    badgeColor: 'gold',
-    thumbnailUrl: '/images/cosplay-competition.jpg',
-    isFeatured: false,
-    highlightGlow: false,
-    actionText: 'Register Now',
-    iconName: 'Sparkles',
   },
 ];
