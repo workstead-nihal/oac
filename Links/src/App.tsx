@@ -128,7 +128,6 @@ export default function App() {
         <ProfileHero
           onOpenQR={() => setQrModalOpen(true)}
           onOpenShare={() => setShareModalOpen(true)}
-          onShowToast={showToast}
         />
 
         {/* Social Icons Bar */}

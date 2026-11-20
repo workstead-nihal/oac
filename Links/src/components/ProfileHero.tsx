@@ -6,7 +6,6 @@ import { getAssetUrl } from '../utils/assets';
 interface ProfileHeroProps {
   onOpenQR: () => void;
   onOpenShare: () => void;
-  onShowToast: (msg: string) => void;
 }
 
 /**
@@ -28,7 +27,7 @@ function getGraphemes(text: string): string[] {
   return Array.from(text);
 }
 
-export default function ProfileHero({ onOpenQR, onOpenShare, onShowToast }: ProfileHeroProps) {
+export default function ProfileHero({ onOpenQR, onOpenShare }: ProfileHeroProps) {
   const [langIndex, setLangIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -74,12 +73,6 @@ export default function ProfileHero({ onOpenQR, onOpenShare, onShowToast }: Prof
     () => clusters.slice(0, charIndex).join(''),
     [clusters, charIndex]
   );
-
-  const handleCopyLink = () => {
-    const currentUrl = typeof window !== 'undefined' ? window.location.href : 'https://joinoac.in';
-    navigator.clipboard.writeText(currentUrl);
-    onShowToast('Page link copied to clipboard!');
-  };
 
   return (
     <section className="relative pt-6 pb-2 text-center flex flex-col items-center">
@@ -186,11 +179,11 @@ export default function ProfileHero({ onOpenQR, onOpenShare, onShowToast }: Prof
         ))}
       </div>
 
-      {/* Action Buttons Toolbar - 3 Column Equal Flex Ratio on All Screens */}
-      <div className="w-full max-w-sm grid grid-cols-3 gap-2 xs:gap-2.5 mt-4 xs:mt-5 px-1">
+      {/* Action Buttons Toolbar - Clean 2-Button Grid (Share & QR Code) */}
+      <div className="w-full max-w-xs grid grid-cols-2 gap-2.5 xs:gap-3 mt-4 xs:mt-5 px-1">
         <button
           onClick={onOpenShare}
-          className="flex items-center justify-center gap-1 xs:gap-1.5 px-2 xs:px-3 sm:px-4 py-2.5 rounded-2xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 hover:border-white/30 text-[11px] xs:text-xs font-semibold text-gray-200 hover:text-white transition-all hover:scale-[1.03] active:scale-95 shadow-sm min-h-[42px]"
+          className="flex items-center justify-center gap-1.5 xs:gap-2 px-3 xs:px-4 py-2.5 rounded-2xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 hover:border-[#F3B334]/40 text-xs font-semibold text-gray-200 hover:text-white transition-all hover:scale-[1.03] active:scale-95 shadow-sm min-h-[42px]"
           aria-label="Share Community Hub"
         >
           <Share2 className="w-3.5 h-3.5 text-[#F3B334] flex-shrink-0" />
@@ -199,19 +192,11 @@ export default function ProfileHero({ onOpenQR, onOpenShare, onShowToast }: Prof
 
         <button
           onClick={onOpenQR}
-          className="flex items-center justify-center gap-1 xs:gap-1.5 px-2 xs:px-3 sm:px-4 py-2.5 rounded-2xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 hover:border-[#D91515]/50 text-[11px] xs:text-xs font-semibold text-gray-200 hover:text-white transition-all hover:scale-[1.03] active:scale-95 shadow-sm min-h-[42px]"
+          className="flex items-center justify-center gap-1.5 xs:gap-2 px-3 xs:px-4 py-2.5 rounded-2xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 hover:border-[#D91515]/50 text-xs font-semibold text-gray-200 hover:text-white transition-all hover:scale-[1.03] active:scale-95 shadow-sm min-h-[42px]"
           aria-label="Show QR Code"
         >
           <QrCode className="w-3.5 h-3.5 text-[#D91515] flex-shrink-0" />
           <span>QR Code</span>
-        </button>
-
-        <button
-          onClick={handleCopyLink}
-          className="flex items-center justify-center gap-1 xs:gap-1.5 px-2 xs:px-3 sm:px-4 py-2.5 rounded-2xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 hover:border-[#F3B334]/50 text-[11px] xs:text-xs font-semibold text-gray-200 hover:text-white transition-all hover:scale-[1.03] active:scale-95 shadow-sm min-h-[42px]"
-          aria-label="Copy Link"
-        >
-          <span>Copy Link</span>
         </button>
       </div>
     </section>
